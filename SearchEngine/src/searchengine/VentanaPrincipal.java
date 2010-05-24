@@ -103,7 +103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 try
 {
         File [] vect;  //vector de archivos
-        rfDoc = new RegisterFile<Documento>("C:\\Users\\Mateo Guzman\\Documents\\NetBeansProjects\\SearchEngine\\Documentos.dat", "rw", new Documento() );
+        rfDoc = new RegisterFile<Documento>("C:\\Users\\Mateo Guzman\\Documents\\Faku\\DLC\\TPFinal\\DLC-Final-2010\\SearchEngine\\Documentos.dat", "rw", new Documento() );
         JFileChooser jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int r = jfc.showOpenDialog(null);
@@ -150,7 +150,18 @@ finally
         // TODO add your handling code here:
         //leer el archivo
         try{
-            JFileChooser
+            RegisterFile rfDoc = new RegisterFile<Documento>("C:\\Users\\Mateo Guzman\\Documents\\Faku\\DLC\\TPFinal\\DLC-Final-2010\\SearchEngine\\Documentos.dat", "rw", new Documento() );
+
+            for (int i = 0; i < rfDoc.registerCount(); i++) {
+
+                Documento doc = new Documento();
+                Register reg =  new Register(doc);
+                rfDoc.read(reg);
+                
+                jTextArea1.append("Documento:\n path: " + doc.getRuta() + "\n Desc: " + doc.getDescripcion());
+
+
+            }
 
         }
         catch(Exception e)
