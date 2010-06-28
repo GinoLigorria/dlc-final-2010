@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lectores SYSTEM "Lectores.dtd">
+<lectores>
+	<lector class="Lectores.LectorTextoPlano">
+		<tipo>txt</tipo>
+		<tipo>java</tipo>
+		<tipo>nfo</tipo>
+		<tipo>rtf</tipo>
+		<tipo>c</tipo>
+		<tipo>cpp</tipo>
+	</lector>
+	<lector class="Lectores.Lector">
+		<tipo>*</tipo>
+	</lector>
+</lectores>
