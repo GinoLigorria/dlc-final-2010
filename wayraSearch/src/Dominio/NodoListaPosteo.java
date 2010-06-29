@@ -26,7 +26,8 @@ public class NodoListaPosteo implements Grabable
     private String tipo; // tam= 4 * 2 bytes= 8
 
     private static final int tam_tipo = 4;
-    
+
+    private long next; // 8 bytes
     
     public long getFrecTermino()
     {
@@ -61,7 +62,17 @@ public class NodoListaPosteo implements Grabable
     }
 
     public int sizeOf() {
-        return 24;
+        return 32;
+    }
+
+    public long getNext()
+    {
+        return next;
+    }
+
+    public void setNext(long next)
+    {
+        this.next = next;
     }
 
     public void grabar(RandomAccessFile raf) {
@@ -69,6 +80,7 @@ public class NodoListaPosteo implements Grabable
             raf.writeLong(posicion);
             raf.writeLong(frecTermino);
             RegisterFile.writeString(raf, tipo, tam_tipo);
+            raf.writeLong(next);
         } catch (IOException ex) {
             Logger.getLogger(NodoListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,6 +92,7 @@ public class NodoListaPosteo implements Grabable
             posicion = raf.readLong();
             frecTermino = raf.readLong();
             tipo = RegisterFile.readString(raf, tam_tipo);
+            next = raf.readLong();
         } catch (IOException ex) {
             Logger.getLogger(NodoListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -29,7 +29,7 @@ public class Main {
     //testInsercionListaPosteo();
     Rutas.borrar();
     testIndexar();
-    testBuscar();
+    //testBuscar();
 
           
 
@@ -94,7 +94,7 @@ public class Main {
               while (!Rutas.getListaPosteo().eof())
               {
                    Rutas.getListaPosteo().read(reg);
-                   reg.getData().toString();
+                   System.out.println(reg.getData().toString());
               }
         }
 
