@@ -59,7 +59,7 @@ public class GestorDocumento
                 documento.getRuta().lastIndexOf(".") + 1);
 
         documento.setTipo(ext);
-        //arreglar esto
+        // sacar esto del lector
         //lee el archivo Lectors
         Iterator iter = Rutas.getParserLectorXML().getVectorLectores().iterator();
 
@@ -95,6 +95,8 @@ public class GestorDocumento
           
             if (vTerminos.size() > 0)
             {
+                //Analiza término por término y arma el vocabulario
+                //y la lista de posteo
                 GestorTermino.actualizarVecTerminos(vTerminos, documento);
             }
 
