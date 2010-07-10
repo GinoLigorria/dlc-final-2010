@@ -885,22 +885,22 @@ public class RegisterFile < E extends Grabable >
      * @return true si fue posible modificar el registro - false si no fue
      *         posible
      */
-    public boolean modificar(Register r)
+    public boolean modificar(E obj)
     {
         boolean resp = false;
         long pos;
 
-        if (r != null && testigo.getClass() == r.getData().getClass())
+        if (obj!=null)
         {
-            openForReadWrite();
+            //openForReadWrite();
 
             try
             {
-                pos = buscar(r);
+                pos = search(obj);
                 if (pos != -1)
                 {
                     seekByte(pos);
-                    grabar(r); // graba el nuevo registro encima del anterior
+                    grabar(new Register(obj)); // graba el nuevo registro encima del anterior
                     resp = true;
                 }
             } catch (Exception e)
