@@ -117,7 +117,7 @@ public void insertar(Dominio.NodoListaPosteo node)
         try {
             //obtener posición de último nodo grabado
             //insertar en archivo
-            long posicionActual = Rutas.getListaPosteo().alta(new Register(node));
+            long posicionActual = Rutas.getListaPosteo().alta(node);
             //setear el next del último nodo grabado con la posición del reciente grabado
             if (ultimaPosicion == -1)
             {

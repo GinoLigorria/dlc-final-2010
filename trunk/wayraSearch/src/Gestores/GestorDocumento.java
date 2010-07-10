@@ -154,7 +154,7 @@ public class GestorDocumento
         try
         {
             Rutas.getArchivoDocu().openForRead();
-            r = Rutas.getArchivoDocu().buscar(new Register(doc));
+            r = Rutas.getArchivoDocu().search(doc);
             Rutas.getArchivoDocu().close();
         } catch (FileNotFoundException e)
         {           
