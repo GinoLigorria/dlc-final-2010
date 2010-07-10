@@ -135,12 +135,12 @@ public class GestorDocumento
         Documento d =null;
         try
         {
-            Rutas.getArchivoDocu().openForRead();
+            //Rutas.getArchivoDocu().openForRead();
             Rutas.getArchivoDocu().seekRegister(pos);
             Register r = Rutas.getArchivoDocu().leer();
             Rutas.getArchivoDocu().close();
             d=(Documento) r.getData();
-        } catch (FileNotFoundException e)
+        } catch (Exception e)
         {            
         }
 
@@ -153,10 +153,10 @@ public class GestorDocumento
         long r =-1;
         try
         {
-            Rutas.getArchivoDocu().openForRead();
+            //Rutas.getArchivoDocu().openForRead();
             r = Rutas.getArchivoDocu().search(doc);
             Rutas.getArchivoDocu().close();
-        } catch (FileNotFoundException e)
+        } catch (Exception e)
         {           
         }
         return r;
