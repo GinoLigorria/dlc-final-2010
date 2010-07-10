@@ -356,7 +356,7 @@ public class RegisterFile < E extends Grabable >
         }
         catch(IOException e)
         {
-            System.out.println( "Error al intentar devolver el n�mero de byte: " + e.getMessage());
+            System.out.println( "Error al intentar devolver el numero de byte: " + e.getMessage());
             System.exit(1);
         }
 
@@ -666,23 +666,23 @@ public class RegisterFile < E extends Grabable >
      *            registro a agregar
      * @return la posicion en la que fue grabado el registro
      */
-    public long alta(Register r)
+    public long alta(E obj)
     {
         long pos;
         long ret = -1;
 
-        if (r != null && testigo.getClass() == r.getData().getClass())
+        if (obj != null)
         {
-            openForReadWrite();
+            //openForReadWrite();
 
             try
             {
-                pos = buscar(r);
+                pos = search(obj);
                 if (pos == -1)
                 {
                     goFinal();
                     ret = registerPos();
-                    grabar(r);
+                    grabar(new Register(obj));
                 }
             } catch (Exception e)
             {
