@@ -35,6 +35,7 @@ public class LectorTextoPlano extends Lector
             while(aux !=null)
             {
             r.append(aux);
+            r.append(" ");
             aux = br.readLine();
             }
             
