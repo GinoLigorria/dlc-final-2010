@@ -55,7 +55,7 @@ public class GestorTermino
            //inserto en Vocabulario si no existe (Mateo)
             if (Rutas.getVocabulario().containsValue(t))
             {               
-                t = (Termino) Rutas.getVocabulario().get(t); //No debería aumentarle 1 la frecuencia_?
+                t = (Termino) Rutas.getVocabulario().get(t); //No debería aumentarle 1 cantDoc y chequear la frecuencia maxima
                 
             } else
             {

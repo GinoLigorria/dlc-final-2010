@@ -24,7 +24,7 @@ public class RegisterFile < E extends Grabable >
 
     private Grabable testigo; // representa al contenido grabado en el archivo
 
-    private Register reg; // auxiliar para operaciones internas
+    //private Register reg; // auxiliar para operaciones internas
 
 
 
@@ -108,17 +108,17 @@ public class RegisterFile < E extends Grabable >
     }
 
     //obsoleto
-    public RegisterFile(String nombre, Grabable r) throws ClassNotFoundException
-    {
-        if (r == null)
-            throw new ClassNotFoundException(
-                    "Clase incorrecta o inexistente para el tipo de registro");
-
-        testigo = r;
-        reg = new Register(r);
-
-        fd = new File(nombre);
-    }
+//    public RegisterFile(String nombre, Grabable r) throws ClassNotFoundException
+//    {
+//        if (r == null)
+//            throw new ClassNotFoundException(
+//                    "Clase incorrecta o inexistente para el tipo de registro");
+//
+//        testigo = r;
+//        reg = new Register(r);
+//
+//        fd = new File(nombre);
+//    }
 
     /**
      * Acceso al descriptor del archivo
@@ -139,6 +139,7 @@ public class RegisterFile < E extends Grabable >
      */
     public RandomAccessFile getMasterFile()
     {
+
         return maestro;
     }
 
@@ -148,7 +149,7 @@ public class RegisterFile < E extends Grabable >
      *retorna un registro ubicado en la posicion pasada por parametro si la posicion esta fuera o es mayor del
      *tama�o del registro se produce una excepcion
      */
-    public Register getRegister(int index)throws RegistroInexistenteException
+    public Register getRegister(long index)throws RegistroInexistenteException
     {
         Register reg=null;
         try {
@@ -194,11 +195,30 @@ public class RegisterFile < E extends Grabable >
     /**
      * Borra el RegisterFile del disco
      */
-    public void delete()
+    public boolean  delete()
     {
-        fd.delete();
+        try
+        {
+        if (maestro != null)
+        {
+            maestro.close();
+        }
+        }
+        catch (IOException e)
+        {
+
+        }
+        return fd.delete();
     }
 
+    public boolean exists()
+    {
+        return fd.exists();
+    }
+    public boolean canDelete()
+    {
+        return fd.canWrite();
+    }
     /**
      * Cambia el nombre del archivo
      * 
@@ -206,9 +226,9 @@ public class RegisterFile < E extends Grabable >
      *            otro RegisterFile, cuyo nombre (o file descriptor) ser� dado al
      *            actual
      */
-    public void rename(RegisterFile nuevo)
+    public boolean rename(RegisterFile nuevo)
     {
-        fd.renameTo(nuevo.fd);
+        return fd.renameTo(nuevo.fd);
     }
 
     /**
@@ -269,6 +289,7 @@ public class RegisterFile < E extends Grabable >
      */
     public void seekRegister(long i)
     {
+        Register reg = new Register (testigo);
         try
         {
             maestro.seek(i * reg.sizeOf());
@@ -349,6 +370,7 @@ public class RegisterFile < E extends Grabable >
      */
     public long registerPos()
     {
+        Register reg = new Register (testigo); //nuevo Mateo
         try
         {
             return maestro.getFilePointer() / reg.sizeOf();
@@ -378,26 +400,6 @@ public class RegisterFile < E extends Grabable >
                     + e.getMessage());
             System.exit(1);
         }
-    }
-
-    /**
-     * Devuelve la cantidad de registros del archivo en este momento
-     * 
-     * @return el n�mero de registros del archivo
-     */
-    public long countRegisters()
-    {
-        try
-        {
-            return maestro.length() / reg.sizeOf();
-        } catch (IOException e)
-        {
-            System.out.println("Error al calcular el n�mero de registros: "
-                    + e.getMessage());
-            System.exit(1);
-        }
-
-        return 0;
     }
 
      /**
@@ -469,6 +471,16 @@ public class RegisterFile < E extends Grabable >
         }
     }
 
+      public void setMasterFile(RandomAccessFile r)
+    {
+        maestro=r;
+    }
+
+    public void setFileDescriptor(File fd)
+    {
+        this.fd=fd;
+    }
+
     /**
      * Lee un registro del archivo
      * 
@@ -494,6 +506,32 @@ public class RegisterFile < E extends Grabable >
     }
 
     /**
+     * Lee un registro del archivo, a partir de la posición del file pointer en ese momento. El archivo se supone
+     * abierto.
+     * @param obj el registro mediante el cual se hará la lectura. Los valores leidos vuelven en ese mismo objeto.
+     * @return true si la lectura pudo hacerse - false en caso contrario.
+     */
+
+    public boolean read (Register r)
+    {
+        if(r != null)
+        {
+            try
+            {
+                r.leer(maestro);
+            }
+            catch(Exception e)
+            {
+                System.out.println( "Error al leer el registro ");
+
+                System.exit(1);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Busca un registro en el archivo. Si la clase del registro que se busca no
      * coincide con la clase de los registros grabados en el archivo, retorna
      * -1. En general, el retorno de -1 significa que el registro no fue
@@ -503,9 +541,10 @@ public class RegisterFile < E extends Grabable >
      *            objeto a buscar en el archivo
      * @return la posici�n de byte del registro en el archivo, si existe, o -1
      *         si no existe
+     * OBSOLETO
      */
     public long buscar(Register r)
-    {
+    { Register reg = new Register(r);
         if (r == null || testigo.getClass() != r.getData().getClass())
             return -1;
 
@@ -523,6 +562,8 @@ public class RegisterFile < E extends Grabable >
         seekByte(actual);
         return pos;
     }
+
+
 
      /**
      * Busca un registro en el archivo. Retorna -1 si el registro no se encuentra, o el n�mero de byte donde comienza la
@@ -719,6 +760,33 @@ public class RegisterFile < E extends Grabable >
         return resp;
     }
 
+
+    /**
+     * Agrega un registro en el archivo, sin controlar repetición. El archivo debe estar abierto en modo de grabación.
+     * El archivo vuelve abierto.
+     * @param obj el registro a agregar.
+     * @return true si fue posible agregar el registro - false si no fue posible.
+     */
+    public boolean append (E obj)
+    {
+        boolean resp = false;
+        if( obj != null )
+        {
+            try
+            {
+                goFinal();
+                write(new Register(obj));
+                resp = true;
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error al grabar el registro: " + e.getMessage());
+                System.exit(1);
+            }
+        }
+        return resp;
+    }
+
     /**
      * Borra un registro del archivo. La clase del registro buscado debe
      * coincidir con la clase indicada para el archivo al invocar al
@@ -730,6 +798,7 @@ public class RegisterFile < E extends Grabable >
      *            registro a buscar y borrar
      * @return true si fue posible borrar el registro - false si no fue posible
      */
+    /* OBSOLETO
     public boolean baja(Register r)
     {
         boolean resp = false;
@@ -762,6 +831,46 @@ public class RegisterFile < E extends Grabable >
 
         return resp;
     }
+    */
+
+          /**
+       * Borra un registro del archivo. El archivo debe estar abierto en modo de grabación. El registro se marca como
+       * borrado, aunque sigue físicamente ocupando lugar en el archivo. El archivo vuelve abierto.
+       * @param obj el registro a buscar y borrar.
+       * @return true si fue posible borrar el registro - false si no fue posible.
+       */
+      public boolean remove (E obj)
+      {
+        boolean resp = false;
+        long pos;
+
+        if( obj != null )
+        {
+            try
+            {
+                Grabable r2 = obj.getClass().newInstance();
+                Register reg = new Register(r2);
+
+                pos = search(obj);
+                if (pos != -1)
+                {
+                     seekByte(pos);
+                     read(reg);
+                     reg.setActive(false);
+
+                     seekByte(pos);
+                     write(reg);
+                     resp = true;
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error al eliminar el registro: " + e.getMessage());
+                System.exit(1);
+            }
+        }
+        return resp;
+      }
 
     /**
      * Modifica un registro en el archivo. Reemplaza el registro en una posici�n
@@ -803,38 +912,123 @@ public class RegisterFile < E extends Grabable >
         return resp;
     }
 
+          /**
+       * Modifica un registro en el archivo. Reemplaza el registro en una posición dada, cambiando sus datos por otros
+       * tomados como parámetro. El objeto que viene como parámetro se busca en el archivo, y si se encuentra entonces
+       * el que estaba en el disco es reemplazado por el que entró a modo de parámetro. El archivo debe estar abierto en
+       * modo de grabación. El archivo vuelve abierto.
+       * @param obj el objeto con los nuevos datos.
+       * @return true si fue posible modificar el registro - false si no fue posible
+       */
+      public boolean update (E obj)
+      {
+        boolean resp = false;
+        long pos;
+
+        if( obj != null )
+        {
+            try
+            {
+                pos = search(obj);
+                if (pos != -1)
+                {
+                     seekByte(pos);
+                     write( new Register(obj) ); // graba el nuevo registro encima del anterior
+                     resp = true;
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error al modificar el registro: " + e.getMessage());
+                System.exit(1);
+            }
+        }
+        return resp;
+      }
+
     /**
      * Elimina f�sicamente los registros que estuvieran marcados como borrados.
      * El RegisterFile queda limpio, pero sale cerrado.
+     * Obsoleto
      */
-    public void depurar()
-    {
+//    public void depurar()
+//    {
+//        try
+//        {
+//
+//            RegisterFile temp = new RegisterFile("temporal.dat", testigo);
+//            temp.openForReadWrite();
+//
+//            this.openForRead();
+//            while (!this.eof())
+//            {
+//                reg = this.leer();
+//                if (reg.isActive())
+//                    temp.grabar(reg);
+//            }
+//
+//            this.close();
+//            temp.close();
+//            this.delete();
+//            temp.rename(this);
+//        } catch (ClassNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        } catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//
+
+
+      /**
+       * Elimina físicamente los registros que estuvieran marcados como borrados. El archivo queda limpio, sólo con
+       * registros activos (no marcados como borrados). El archivo sale cerrado.
+       */
+      public void clean()
+      {
         try
         {
+           Grabable r2 = testigo.getClass().newInstance();
+           Register reg = new Register(r2);
 
-            RegisterFile temp = new RegisterFile("temporal.dat", testigo);
-            temp.openForReadWrite();
+           RegisterFile temp = new RegisterFile ("temporal.dat", "rw", testigo);
+           temp.maestro.setLength(0);
+           this.rewind();
+           while (!this.eof())
+           {
+                  this.read( reg );
 
-            this.openForRead();
-            while (!this.eof())
-            {
-                reg = this.leer();
-                if (reg.isActive())
-                    temp.grabar(reg);
-            }
+                  if ( reg.isActive() )
+                  {
+                      temp.write(reg);
+                  }
+           }
 
-            this.close();
-            temp.close();
-            this.delete();
-            temp.rename(this);
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {            
-            e.printStackTrace();
+           this.close();
+
+           temp.close();
+           //verificar q se borre
+           if (this.delete()==false){
+               System.out.println("Error al querer borrar el archivo original");
+               return;
+               }
+
+          if (temp.rename(this)== false){
+               System.out.println("Error al renombrar el archivo");
+               return;
+          }
+           System.out.println("Arvhivo borrado exitosamente");
+
         }
-    }
+        catch(Exception e)
+        {
+            System.out.println( "Error de tipo de dato con el archivo temporal: " + e.getMessage());
+            System.exit(1);
+        }
+      }
+
 
     public void ordenar()
     {
@@ -842,7 +1036,7 @@ public class RegisterFile < E extends Grabable >
         Register ri, rj;
 
         openForReadWrite();
-        n = countRegisters();
+        n = registerCount();
         for (i = 0; i < n - 1; i++)
         {
             // seekRegister(i); // esta no hace falta...
@@ -884,30 +1078,6 @@ public class RegisterFile < E extends Grabable >
         }
 
         return 0;
-    }
-
-     /**
-     * Lee un registro del archivo, a partir de la posici�n del file pointer en ese momento. El archivo se supone
-     * abierto.
-     * @param obj el registro mediante el cual se har� la lectura. Los valores leidos vuelven en ese mismo objeto.
-     * @return true si la lectura pudo hacerse - false en caso contrario.
-     */
-    public boolean read (Register r)
-    {
-        if(r != null)
-        {
-            try
-            {
-                r.leer(maestro);
-            }
-            catch(Exception e)
-            {
-                System.out.println("Error al leer el registro: " + e.getMessage());
-                System.exit(1);
-            }
-            return true;
-        }
-        return false;
     }
 
      /**

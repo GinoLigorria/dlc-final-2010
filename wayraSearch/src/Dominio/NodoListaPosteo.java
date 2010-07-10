@@ -25,9 +25,14 @@ public class NodoListaPosteo implements Grabable
     
     private String tipo; // tam= 4 * 2 bytes= 8
 
-    private static final int tam_tipo = 4;
+    private static final int tam_tipo = 4; // no se almacena
 
     private long next; // 8 bytes
+
+    public NodoListaPosteo()
+    {
+        next = -1;
+    }
     
     public long getFrecTermino()
     {
@@ -104,6 +109,5 @@ public class NodoListaPosteo implements Grabable
     public int compareTo(Object o) {
        NodoListaPosteo ndlp2 = (NodoListaPosteo) o;
        return -1;
-
     }
 }

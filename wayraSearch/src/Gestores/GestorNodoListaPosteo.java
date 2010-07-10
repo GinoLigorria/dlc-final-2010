@@ -41,7 +41,7 @@ public class GestorNodoListaPosteo
             t.setListaPosteo(new ListaPosteo(t.getTermino())); //creo una
         }
 
-        t.getListaPosteo().insertar(nodo); //si tiene le agrego un nodo
+        t.getListaPosteo().insertar(nodo); //le agrego un nodo a la lista posteo
     } 
     
 }
