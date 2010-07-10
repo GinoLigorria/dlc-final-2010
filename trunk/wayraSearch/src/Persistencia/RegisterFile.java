@@ -161,6 +161,8 @@ public class RegisterFile < E extends Grabable >
         }
 
 
+    long tamanio = this.length();
+    long size = index * reg.sizeOf();
 
         if(this.length()-1<index*reg.sizeOf())
         {

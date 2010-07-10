@@ -38,6 +38,7 @@ public ListaPosteo()
     super();
     indicesListaPosteo = new Vector();
     indicesListaPosteoOrdenada = new Vector();
+    ultimaPosicion = -1;
 
 
 }
@@ -47,6 +48,7 @@ public ListaPosteo(String termino)
     super();
     indicesListaPosteo = new Vector();
     indicesListaPosteoOrdenada = new Vector();
+    ultimaPosicion = -1;
 
 }
 
@@ -115,13 +117,21 @@ public void insertar(Dominio.NodoListaPosteo node)
         try {
             //obtener posición de último nodo grabado
             //insertar en archivo
-            long posicion = Rutas.getListaPosteo().alta(new Register(node));
+            long posicionActual = Rutas.getListaPosteo().alta(new Register(node));
             //setear el next del último nodo grabado con la posición del reciente grabado
+            if (ultimaPosicion == -1)
+            {
+                posicionInicial = posicionActual;
+            }
+            else
+            {
             Dominio.NodoListaPosteo nodoAnterior = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(ultimaPosicion).getData();
-            nodoAnterior.setNext(posicion);
+            nodoAnterior.setNext(posicionActual);
             Rutas.getListaPosteo().update(nodoAnterior);
-            ultimaPosicion = posicion;
-            indicesListaPosteo.add(posicion);
+            }
+            ultimaPosicion = posicionActual;
+            indicesListaPosteo.add(posicionActual);
+
         } catch (RegistroInexistenteException ex) {
             Logger.getLogger(ListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
         }

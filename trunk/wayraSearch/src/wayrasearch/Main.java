@@ -27,7 +27,7 @@ public class Main {
         // TODO code application logic here
 
     //testInsercionListaPosteo();
-    Rutas.borrar();
+    //Rutas.borrar();
     testIndexar();
     //testBuscar();
 

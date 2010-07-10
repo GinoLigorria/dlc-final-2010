@@ -34,7 +34,7 @@ public class Rutas
 
     private static File archivoVocabulario = new File("vocabulario.dat");
 
-    private static RegisterFile<NodoListaPosteo> rfListasPosteo = new RegisterFile("listasPosteo.dat", "rw", new NodoListaPosteo());
+    private static  RegisterFile<NodoListaPosteo> rfListasPosteo;
 
     /**
      *  
@@ -63,6 +63,7 @@ public class Rutas
     public static void setArchivoDocu(RegisterFile archivoDocu)
     {
         Rutas.archivoDocu = archivoDocu;
+
     }
 
     public static ParserLectorXML getParserLectorXML()
@@ -171,8 +172,12 @@ public class Rutas
        
     }
 
-    public static RegisterFile<NodoListaPosteo> getListaPosteo()
+    public  static RegisterFile<NodoListaPosteo> getListaPosteo()
     {
+        if (rfListasPosteo == null)
+        {
+             rfListasPosteo =  new RegisterFile("listasPosteo.dat", "rw", new NodoListaPosteo());
+        }
         return rfListasPosteo;
     }
 }
