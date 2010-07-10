@@ -689,7 +689,7 @@ public class RegisterFile < E extends Grabable >
                 e.printStackTrace();
             }
 
-            close();
+            //close();
         }
 
         return ret;
@@ -756,7 +756,7 @@ public class RegisterFile < E extends Grabable >
                 e.printStackTrace();
             }
 
-            close();
+            //close();
         }
 
         return resp;
@@ -908,7 +908,7 @@ public class RegisterFile < E extends Grabable >
                 e.printStackTrace();
             }
 
-            close();
+            //close();
         }
 
         return resp;
