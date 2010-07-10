@@ -42,19 +42,17 @@ public class GestorDocumento
         documento.setCreado(archivo.lastModified());
         documento.setTamanio(archivo.length());
 
-        if (buscar(documento) == -1) // busca si el documento ya fue procesado!
-        {
-            analizar();
-            
-        }
+      
     }
 
     /**
      *  Lee el archivo extrae los términos y actualiza el vector de términos
      *
      */
-    private void analizar()
+    public void analizar()
     {
+        if (buscar(documento) == -1)
+        {
         String ext = documento.getRuta().substring(
                 documento.getRuta().lastIndexOf(".") + 1);
 
@@ -102,6 +100,7 @@ public class GestorDocumento
 
         } catch (NullPointerException e)
         {
+        }
         }
     }
 

@@ -51,8 +51,8 @@ public class Rutas
         {
             try
             {
-                archivoDocu = new RegisterFile("docs.dat", new Documento());
-            } catch (ClassNotFoundException e)
+                archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -146,9 +146,29 @@ public class Rutas
      */
     public static void borrar()
     {
-        getArchivoDocu().delete();
-        archivoVocabulario.delete();
-       //GestorDirectorio.borrarTodo(ParserListaPosteoXML.getFileListas());
+        if (getArchivoDocu().exists() && getArchivoDocu().canDelete())
+        {
+         if (!getArchivoDocu().delete())
+         {
+             System.out.println("No se pudo borrar el archivo ");
+         }
+        }
+        if (archivoVocabulario.exists() && archivoVocabulario.canWrite())
+        {
+            if(!archivoVocabulario.delete())
+            {
+                 System.out.println("No se pudo borrar el archivo vocabulario ");
+            }
+        }
+
+        if (rfListasPosteo.exists() && rfListasPosteo.canDelete())
+        {
+            if(!rfListasPosteo.delete())
+            {
+                 System.out.println("No se pudo borrar el archivo listaPosteo ");
+            }
+        }
+       
     }
 
     public static RegisterFile<NodoListaPosteo> getListaPosteo()

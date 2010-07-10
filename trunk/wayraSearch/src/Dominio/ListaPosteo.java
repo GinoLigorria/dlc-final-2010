@@ -5,6 +5,7 @@
 
 package Dominio;
 
+import Exceptions.RegistroInexistenteException;
 import Persistencia.Grabable;
 import Persistencia.Register;
 import Persistencia.Rutas;
@@ -14,6 +15,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utiles.ComparadorNodosListaPosteo;
 
 /**
@@ -25,6 +28,8 @@ public class ListaPosteo implements Serializable {
 Vector indicesListaPosteo ; //Estos son los índices para recuperar la lista de posteo
 Vector indicesListaPosteoOrdenada  = new Vector();
 private  NodoListaPosteo[] listaPosteo;
+private long posicionInicial;
+private long ultimaPosicion;
 
 
 //Constructor
@@ -40,15 +45,17 @@ public ListaPosteo()
 public ListaPosteo(String termino)
 {
     super();
+    indicesListaPosteo = new Vector();
+    indicesListaPosteoOrdenada = new Vector();
 
 }
 
-public ListaPosteo(int posInicial, RandomAccessFile raf)
+public ListaPosteo(int posInicial)
 {
     super();
 
     try {
-        NodoListaPosteo nodo = new NodoListaPosteo();//creo un NodoListaPosteo
+         NodoListaPosteo nodo = new NodoListaPosteo();//creo un NodoListaPosteo
         //raf.seek(posInicial * nodo.sizeOf()); //pongo el puntero al primer nodo
         //nodo.leer(raf);
 
@@ -105,10 +112,19 @@ public Vector buscarNodos(int cantidad)
 
 public void insertar(Dominio.NodoListaPosteo node)
 {
-    //insertar en archivo
-    long posicion= Rutas.getListaPosteo().alta(new Register(node));
-
-    indicesListaPosteo.add(posicion);
+        try {
+            //obtener posición de último nodo grabado
+            //insertar en archivo
+            long posicion = Rutas.getListaPosteo().alta(new Register(node));
+            //setear el next del último nodo grabado con la posición del reciente grabado
+            Dominio.NodoListaPosteo nodoAnterior = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(ultimaPosicion).getData();
+            nodoAnterior.setNext(posicion);
+            Rutas.getListaPosteo().update(nodoAnterior);
+            ultimaPosicion = posicion;
+            indicesListaPosteo.add(posicion);
+        } catch (RegistroInexistenteException ex) {
+            Logger.getLogger(ListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 }
 

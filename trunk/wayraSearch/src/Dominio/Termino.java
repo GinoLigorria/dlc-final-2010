@@ -30,6 +30,7 @@ public class Termino implements Comparable, Serializable
     private ListaPosteo listaPosteo; // Posición de comienzo de la lista de posteo
 
 
+
     /**
      *  
      */
@@ -38,6 +39,7 @@ public class Termino implements Comparable, Serializable
         super();
         frecMaxima = 0;
         cantDoc = 0;
+
     }
 
     public long getCantDoc()
@@ -97,7 +99,9 @@ public class Termino implements Comparable, Serializable
 
     public ListaPosteo getListaPosteo()
     {
-        return listaPosteo;
+
+      return listaPosteo;
+
     }
 
     public void setListaPosteo(ListaPosteo listaPosteo)

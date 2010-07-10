@@ -42,7 +42,8 @@ public class GestorDirectorio
                 dir.indizar();
             } else
             {
-                gestor = new GestorDocumento(aux);               
+                gestor = new GestorDocumento(aux);
+                gestor.analizar();
             }
         }
         Rutas.serializarVocabulario(); //(nuevo Mateo)
