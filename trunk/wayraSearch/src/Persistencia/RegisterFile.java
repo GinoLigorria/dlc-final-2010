@@ -160,11 +160,7 @@ public class RegisterFile < E extends Grabable >
             ex.printStackTrace();
         }
 
-
-    long tamanio = this.length();
-    long size = index * reg.sizeOf();
-
-        if(this.length()-1<index*reg.sizeOf())
+         if(this.length()-1<index*reg.sizeOf())
         {
                throw new RegistroInexistenteException();
         }
@@ -181,7 +177,7 @@ public class RegisterFile < E extends Grabable >
      graba un registro pasado por parametro en la posicion pasada por parametro, si la posicion no existe
      *lanza una excepcion*/
 
-    public void writeRegister(Register reg,int k) throws RegistroInexistenteException
+    public void writeRegister(Register reg,long k) throws RegistroInexistenteException
     {
 
         if(this.length()<k*reg.sizeOf())
@@ -238,6 +234,7 @@ public class RegisterFile < E extends Grabable >
      * previamente. Queda posicionado al principio del archivo.
      * 
      * @throws FileNotFoundException
+     * OBSOLETO
      */
     public void openForRead() throws FileNotFoundException
     {
@@ -249,6 +246,7 @@ public class RegisterFile < E extends Grabable >
      * exist�a, ser� creado. Si exist�a, ser� posicionado al principio del
      * archivo. Mueva el puntero de registro activo con el m�todo seekRegister()
      * o con seekByte().
+     * OBSOLETO
      */
     public void openForReadWrite()
     {
@@ -451,29 +449,7 @@ public class RegisterFile < E extends Grabable >
         return true;
     }
 
-    /**
-     * Graba un registro en el archivo
-     * 
-     * @param r
-     *            el registro a grabar
-     */
-    public void grabar(Register r)
-    {
-        if (r != null )
-        {
-            try
-            {
-                r.grabar(maestro);
-            } catch (Exception e)
-            {
-                System.out.println("Error al grabar el registro: "
-                        + e.getMessage());
-                System.exit(1);
-            }
-        }
-    }
-
-      public void setMasterFile(RandomAccessFile r)
+         public void setMasterFile(RandomAccessFile r)
     {
         maestro=r;
     }
@@ -682,7 +658,7 @@ public class RegisterFile < E extends Grabable >
                 {
                     goFinal();
                     ret = registerPos();
-                    grabar(new Register(obj));
+                    write(new Register(obj));
                 }
             } catch (Exception e)
             {
@@ -728,41 +704,27 @@ public class RegisterFile < E extends Grabable >
         return resp;
     }
 
-    /**
-     * Agrega un registro en el archivo, sin controlar repetici�n. La clase del
-     * nuevo registro debe coincidir con la clase indicada para el archivo al
-     * invocar al constructor. El archivo debe estar abierto en modo de
-     * grabaci�n.
-     * 
-     * @param r
-     *            registro a agregar
-     * @return true si fue posible agregar el registro - false si no fue posible
+  
+/**
+     * Agrega un registro en el archivo, sin controlar repetición. El archivo debe estar abierto en modo de grabación.
+     * El archivo vuelve abierto.
+     * @param obj el registro a agregar.
+     * @return la posición del registro grabado
      */
-    public long altaDirecta(Register r)
+
+    public long altaDirecta (E obj)
     {
         long resp = -1;
-
-        if (r != null && testigo.getClass() == r.getData().getClass())
+        resp = registerPos();
+        if (append(obj))
         {
-            openForReadWrite();
-
-            try
-            {
-                goFinal();
-                resp = registerPos();
-                grabar(r);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            //close();
+            return resp;
         }
-
-        return resp;
+        else
+        {
+            return -1;
+        }
     }
-
-
     /**
      * Agrega un registro en el archivo, sin controlar repetición. El archivo debe estar abierto en modo de grabación.
      * El archivo vuelve abierto.
@@ -874,45 +836,6 @@ public class RegisterFile < E extends Grabable >
         return resp;
       }
 
-    /**
-     * Modifica un registro en el archivo. Reemplaza el registro en una posici�n
-     * dada, por otro tomado como par�metro. La clase del registro buscado debe
-     * coincidir con la clase indicada para el archivo al invocar al
-     * constructor. El archivo debe estar abierto en modo de grabaci�n.
-     * 
-     * @param r
-     *            registro con los nuevos datos
-     * @return true si fue posible modificar el registro - false si no fue
-     *         posible
-     */
-    public boolean modificar(E obj)
-    {
-        boolean resp = false;
-        long pos;
-
-        if (obj!=null)
-        {
-            //openForReadWrite();
-
-            try
-            {
-                pos = search(obj);
-                if (pos != -1)
-                {
-                    seekByte(pos);
-                    grabar(new Register(obj)); // graba el nuevo registro encima del anterior
-                    resp = true;
-                }
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-            //close();
-        }
-
-        return resp;
-    }
 
           /**
        * Modifica un registro en el archivo. Reemplaza el registro en una posición dada, cambiando sus datos por otros
@@ -948,7 +871,10 @@ public class RegisterFile < E extends Grabable >
         return resp;
       }
 
-    /**
+
+
+
+     /**
      * Elimina f�sicamente los registros que estuvieran marcados como borrados.
      * El RegisterFile queda limpio, pero sale cerrado.
      * Obsoleto
@@ -1037,7 +963,7 @@ public class RegisterFile < E extends Grabable >
         long i, j, n;
         Register ri, rj;
 
-        openForReadWrite();
+        //openForReadWrite(); //chequear si hace falta
         n = registerCount();
         for (i = 0; i < n - 1; i++)
         {
@@ -1052,13 +978,13 @@ public class RegisterFile < E extends Grabable >
                 if (ri.compareTo(rj) > 0)
                 {
                     seekRegister(j);
-                    grabar(ri); // s�... ri
+                    write(ri); // s�... ri
                     ri = rj;
                 }
             }
 
             seekRegister(i);
-            grabar(ri);
+            write(ri);
         }
         close();
     }

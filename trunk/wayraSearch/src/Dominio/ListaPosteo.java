@@ -25,9 +25,7 @@ import utiles.ComparadorNodosListaPosteo;
  */
 public class ListaPosteo implements Serializable {
 
-Vector indicesListaPosteo ; //Estos son los índices para recuperar la lista de posteo
-Vector indicesListaPosteoOrdenada  = new Vector();
-private  NodoListaPosteo[] listaPosteo;
+
 private long posicionInicial;
 private long ultimaPosicion;
 
@@ -36,8 +34,7 @@ private long ultimaPosicion;
 public ListaPosteo()
 {
     super();
-    indicesListaPosteo = new Vector();
-    indicesListaPosteoOrdenada = new Vector();
+   
     ultimaPosicion = -1;
 
 
@@ -46,8 +43,7 @@ public ListaPosteo()
 public ListaPosteo(String termino)
 {
     super();
-    indicesListaPosteo = new Vector();
-    indicesListaPosteoOrdenada = new Vector();
+ 
     ultimaPosicion = -1;
 
 }
@@ -69,32 +65,14 @@ public ListaPosteo(int posInicial)
 
 }
 
-public void setIndicesListaPosteo (Vector indicesListaPosteo)
-{
-    this.indicesListaPosteo = indicesListaPosteo;
-}
 
-public Vector getIndicesListaPosteo()
-{
-    return this.indicesListaPosteo;
-}
-
-public void setIndicesListaPosteoOrdenada( Vector indicesListaPosteoOrdenada)
-{
-    this.indicesListaPosteoOrdenada = indicesListaPosteoOrdenada;
-}
-
-public Vector getIndicesListaPosteoOrdenada()
-{
-    return this.indicesListaPosteoOrdenada;
-}
 
 public void ordenarListaDePosteo()
 {
     //lógica de ordenamiento
     //recorrer cada uno de los nodos de posteo y ordenar por frecuencia
-    indicesListaPosteoOrdenada = indicesListaPosteo;
-    Collections.sort(indicesListaPosteoOrdenada,new ComparadorNodosListaPosteo());
+    //indicesListaPosteoOrdenada = indicesListaPosteo;
+    //Collections.sort(indicesListaPosteoOrdenada,new ComparadorNodosListaPosteo());
 
 
 }
@@ -112,6 +90,38 @@ public Vector buscarNodos(int cantidad)
  return new Vector();
 }
 
+
+public Vector getVectorDeNodos()
+{
+      try {
+            //declaro el vector
+            Vector nodos = new Vector();
+            //obtener nodos hasta que el next sea -1
+
+            //
+            if (posicionInicial != -1)
+            {
+                //obtengo el primer nodo
+                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(posicionInicial).getData();
+                nodos.add(nodo);
+                //mientras existan nodos
+                while (nodo.getNext()!= -1)
+                {
+                    nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(nodo.getNext()).getData();
+                    nodos.add(nodo);
+                }
+                // tengo el vector con todos los nodos
+            }
+
+            return nodos;
+
+        } catch (RegistroInexistenteException ex) {
+            Logger.getLogger(ListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+}
+
 public void insertar(Dominio.NodoListaPosteo node)
 {
         try {
@@ -125,12 +135,13 @@ public void insertar(Dominio.NodoListaPosteo node)
             }
             else
             {
+                //acceso a disco DIRECTO
             Dominio.NodoListaPosteo nodoAnterior = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(ultimaPosicion).getData();
             nodoAnterior.setNext(posicionActual);
-            Rutas.getListaPosteo().update(nodoAnterior);
+            Rutas.getListaPosteo().writeRegister(new Register(nodoAnterior), ultimaPosicion);
             }
             ultimaPosicion = posicionActual;
-            indicesListaPosteo.add(posicionActual);
+            //indicesListaPosteo.add(posicionActual);
 
         } catch (RegistroInexistenteException ex) {
             Logger.getLogger(ListaPosteo.class.getName()).log(Level.SEVERE, null, ex);

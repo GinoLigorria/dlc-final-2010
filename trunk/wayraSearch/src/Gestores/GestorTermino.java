@@ -45,6 +45,7 @@ public class GestorTermino
         
         Iterator iter = terminos.iterator();
 
+        long cantPal = 0;
         while (iter.hasNext())
         {
             Termino t = (Termino) iter.next();
@@ -53,9 +54,13 @@ public class GestorTermino
             nodo.setPosicion(pos);
             nodo.setTipo(documento.getTipo());
            //inserto en Vocabulario si no existe (Mateo)
+            cantPal+=1;
+            System.out.println("Analizando archivo: " +documento.getRuta());
+            System.out.println("Palabra: " + t.getTermino() + " "+ cantPal);
+            
             if (Rutas.getVocabulario().containsValue(t))
             {               
-                t = (Termino) Rutas.getVocabulario().get(t); //No debería aumentarle 1 cantDoc y chequear la frecuencia maxima
+                t = (Termino) Rutas.getVocabulario().get(t); 
                 
             } else
             {

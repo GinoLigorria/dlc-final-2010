@@ -7,7 +7,7 @@ package Gestores;
 import Dominio.ListaPosteo;
 import Dominio.NodoListaPosteo;
 import Dominio.Termino;
-import Persistencia.xml.ParserListaPosteoXML;
+
 
 /**
  * @author Administrador

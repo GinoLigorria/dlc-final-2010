@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * 
  *  
  */
-public class NodoListaPosteo implements Grabable
+public class NodoListaPosteo implements Grabable , Comparable
 {
     private long posicion; // 8 bytes // es la posición donde está el nombre del archivo
 
@@ -104,10 +104,11 @@ public class NodoListaPosteo implements Grabable
 
     }
 
-    // we need to improve this
-    // we can´t compare if we don´t have the term
+    // Comparamos las frecuencias
+    // lo utilizamos para ordenar las listas de posteo
+    // un numero positivo nos indica que nuesto objeto es mayor al objeto a comparar
     public int compareTo(Object o) {
        NodoListaPosteo ndlp2 = (NodoListaPosteo) o;
-       return -1;
+       return (int)(this.frecTermino - ndlp2.frecTermino);
     }
 }

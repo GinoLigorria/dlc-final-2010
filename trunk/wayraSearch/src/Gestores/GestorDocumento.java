@@ -14,6 +14,8 @@ import Dominio.Documento;
 import Lectores.Lector;
 import Persistencia.Register;
 import Persistencia.Rutas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Administrador
@@ -127,38 +129,28 @@ public class GestorDocumento
     public static long altaArchivo(Documento documento)
     {
         Rutas.getVocabulario().addCantDocumentos();
-        return Rutas.getArchivoDocu().altaDirecta(new Register(documento));
+        return Rutas.getArchivoDocu().altaDirecta(documento);
     }
 
     public static Documento buscar(long pos)
     {
         Documento d =null;
-        try
-        {
-            //Rutas.getArchivoDocu().openForRead();
+       
             Rutas.getArchivoDocu().seekRegister(pos);
             Register r = Rutas.getArchivoDocu().leer();
             Rutas.getArchivoDocu().close();
             d=(Documento) r.getData();
-        } catch (Exception e)
-        {            
-        }
-
-
         return d;
     }
 
     public static long buscar(Documento doc)
     {
-        long r =-1;
-        try
-        {
-            //Rutas.getArchivoDocu().openForRead();
+        long r = -1;
+        
             r = Rutas.getArchivoDocu().search(doc);
             Rutas.getArchivoDocu().close();
-        } catch (Exception e)
-        {           
-        }
-        return r;
+
+      
+          return r;
     }
 }

@@ -46,7 +46,13 @@ public class GestorDirectorio
                 gestor.analizar();
             }
         }
+        //ordenar la lista de posteo
+
+        GestorListaPosteo glp = new GestorListaPosteo();
+        glp.ordenarListaPosteo();
+
         Rutas.serializarVocabulario(); //(nuevo Mateo)
+
     }
 
     public static void borrarTodo(File raiz)
