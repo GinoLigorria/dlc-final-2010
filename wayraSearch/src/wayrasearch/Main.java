@@ -13,6 +13,7 @@ import Persistencia.Register;
 import Persistencia.Rutas;
 import java.io.Console;
 import java.io.File;
+import java.util.Date;
 
 /**
  *
@@ -30,6 +31,8 @@ public class Main {
     //Rutas.borrar();
     testIndexar();
     //testBuscar();
+    //calcularTamanioTotalArchivos();
+        
 
           
 
@@ -60,7 +63,17 @@ public class Main {
         //
         if (DirectorioInicial.isDirectory())
         {
+         Date dateobj = new Date();
+         long startTime = dateobj.getTime();
+         System.out.println("Indización iniciada: " + startTime);
+
          GestorDirectorio.indizar(DirectorioInicial);
+
+         Date dateobj2 = new Date();
+         long endTime = dateobj2.getTime();
+         System.out.println("Inidzacion finalizada: " + endTime);
+         System.out.println("Duracion: " + ((endTime-startTime)/1000) );
+
         }
         else
         {
@@ -98,6 +111,34 @@ public class Main {
               }
         }
 
+    }
+
+    public static void calcularTamanioTotalArchivos()
+    {
+        File DirectorioInicial = new File("C:\\Users\\Mateo Guzman\\Documents\\Faku\\DLC\\TPFinal\\DLC-Final-2010\\rfc");
+        //
+        long tamanioTotal =0;
+        if (DirectorioInicial.isDirectory())
+        {
+            int cantArchivos=0;
+             File[] archivos = DirectorioInicial.listFiles();
+             for (int i = 0; i < archivos.length; i++) {
+                File file = archivos[i];
+                if (file.isFile()){
+                System.out.println("Archivo: " + file.getName()+ "\t tamanio: " + (file.length()/1024));
+                tamanioTotal+=file.length()/1024;
+                cantArchivos++;
+
+                }
+
+             }
+             System.out.println("Cantidad de archivos: " + cantArchivos);
+             System.out.println("Promedio de tamanio de archivos: " + (tamanioTotal/cantArchivos));
+
+             System.out.println("Tamanio total: " + tamanioTotal +"kb");
+
+
+        }
     }
 
 

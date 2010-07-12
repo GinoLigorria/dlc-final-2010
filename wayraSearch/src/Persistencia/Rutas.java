@@ -36,6 +36,8 @@ public class Rutas
 
     private static  RegisterFile<NodoListaPosteo> rfListasPosteo;
 
+    private static RegisterFile<NodoListaPosteo> rfListaPosteoOrdenada;
+
     /**
      *  
      */
@@ -47,16 +49,8 @@ public class Rutas
 
     public static RegisterFile getArchivoDocu()
     {
-        if (archivoDocu == null)
-        {
-            try
-            {
-                archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+                 
+       archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());                  
         return archivoDocu;
     }
 
@@ -176,8 +170,17 @@ public class Rutas
     {
         if (rfListasPosteo == null)
         {
-             rfListasPosteo =  new RegisterFile("listasPosteo.dat", "rw", new NodoListaPosteo());
+             rfListasPosteo =  new RegisterFile<NodoListaPosteo>("listasPosteo.dat", "rw", new NodoListaPosteo());
         }
         return rfListasPosteo;
+    }
+
+    public static RegisterFile<NodoListaPosteo> getRFListaPosteoOrdenada()
+    {
+        if (rfListaPosteoOrdenada == null)
+        {
+            rfListaPosteoOrdenada = new RegisterFile<NodoListaPosteo>("listaPosteoOrdenada.dat", "rw", new NodoListaPosteo());
+        }
+        return rfListaPosteoOrdenada;
     }
 }
