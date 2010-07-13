@@ -85,7 +85,8 @@ public class GestorBusqueda
     }
 
     /**
-     * @param simples
+     * Busca los Nodos en los que se encuentran el vector de terminos.
+     * @param Vector de términos
      * @return
      */
     private Vector buscarNodos(Vector v)

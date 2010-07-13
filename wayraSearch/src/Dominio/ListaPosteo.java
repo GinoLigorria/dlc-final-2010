@@ -84,10 +84,41 @@ public void cargarListaPosteo(RandomAccessFile raf)
     //leer nodolistaposteo
 
 }
-
+/**
+ * Busca los nodos en la lista de posteo.
+ * La cantidad de nodos a devolver está indicada por el parametro cantidad.
+ * @param cantidad de nodos a devolver
+ * @return Vector de NodosListaPosteo
+ */
 public Vector buscarNodos(int cantidad)
 {
- return new Vector();
+
+ try {
+            //declaro el vector
+            Vector nodos = new Vector();
+            //obtener nodos hasta que el next sea -1
+
+            //
+            if (posicionInicial != -1 && nodos.size() <= cantidad)
+            {
+                //obtengo el primer nodo
+                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(posicionInicial).getData();
+                nodos.add(nodo);
+                //mientras existan nodos
+                while (nodo.getNext()!= -1 && nodos.size() <= cantidad)
+                {
+                    nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(nodo.getNext()).getData();
+                    nodos.add(nodo);
+                }
+                // tengo el vector con todos los nodos
+            }
+
+            return nodos;
+
+        } catch (RegistroInexistenteException ex) {
+            Logger.getLogger(ListaPosteo.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
 }
 
 

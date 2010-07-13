@@ -44,7 +44,7 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("loop");
+        StringBuffer criterio = new StringBuffer("done");
         busqueda.setCriterio(criterio);
         busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
@@ -59,7 +59,7 @@ public class Main {
     {
             //INDIZAR
         //Seteo el Directorio a indizar
-        File DirectorioInicial = new File("C:\\Users\\Mateo Guzman\\Documents\\Faku\\DLC\\TPFinal\\DLC-Final-2010\\test");
+        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca");
         //
         if (DirectorioInicial.isDirectory())
         {
