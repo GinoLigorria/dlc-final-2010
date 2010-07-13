@@ -74,7 +74,15 @@ public class Rutas
     {
         if (vocabulario == null)
         {
-            vocabulario = new Vocabulario();
+            if (archivoVocabulario.exists())
+            {
+                materializarVocabulario();
+            }
+            else
+            {
+                vocabulario = new Vocabulario();
+            }
+            
         }
         return vocabulario;
     }
@@ -89,7 +97,7 @@ public class Rutas
         Rutas.vocabulario = v;
     }
 
-    public static void serializarVocabulario()
+    public static boolean serializarVocabulario()
     {
         try
         {
@@ -102,18 +110,28 @@ public class Rutas
             fos.flush();
             oos.close();
             fos.close();
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
         }
-    }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
 
-    public static void materializarVocabulario()
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+/**
+ * Materializa desde el archivoVocabulario el objeto Vocabulario
+ * @return true si se pudo materializar, false si no pudo
+ */
+    public static boolean materializarVocabulario()
     {
         File f = archivoVocabulario;
+
         try
         {
             FileInputStream fis = new FileInputStream(f);
@@ -123,17 +141,24 @@ public class Rutas
             ois.close();
             fis.close();
 
-        } catch (FileNotFoundException e)
-        {
-
-            e.printStackTrace();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
         }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     /**
