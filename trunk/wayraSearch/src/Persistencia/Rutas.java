@@ -15,9 +15,9 @@ import java.io.ObjectOutputStream;
 import Dominio.Documento;
 import Dominio.NodoListaPosteo;
 import Dominio.Vocabulario;
-import Gestores.GestorDirectorio;
 import Persistencia.xml.ParserLectorXML;
-import Persistencia.xml.ParserListaPosteoXML;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 
 /**
  * @author Administrador
@@ -49,8 +49,10 @@ public class Rutas
 
     public static RegisterFile getArchivoDocu()
     {
-                 
-       archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());                  
+       if (archivoDocu == null)     
+       {
+       archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());
+       }
         return archivoDocu;
     }
 
@@ -103,7 +105,8 @@ public class Rutas
         {
             File f = archivoVocabulario;
             FileOutputStream fos = new FileOutputStream(f);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+             BufferedOutputStream bos = new BufferedOutputStream(fos);//mejora performance
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
             oos.writeObject(vocabulario);
 
             oos.flush();
@@ -135,7 +138,8 @@ public class Rutas
         try
         {
             FileInputStream fis = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            BufferedInputStream bis = new BufferedInputStream(fis); //mejora performance
+            ObjectInputStream ois = new ObjectInputStream(bis);
             vocabulario = (Vocabulario) ois.readObject();
 
             ois.close();

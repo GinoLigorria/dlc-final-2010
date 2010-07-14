@@ -29,8 +29,8 @@ public class Main {
 
     //testInsercionListaPosteo();
     //Rutas.borrar();
-    testIndexar();
-    //testBuscar();
+   //testIndexar();
+    testBuscar();
     //calcularTamanioTotalArchivos();
         
 
@@ -44,7 +44,7 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("done");
+        StringBuffer criterio = new StringBuffer("the");
         busqueda.setCriterio(criterio);
         busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
@@ -59,7 +59,7 @@ public class Main {
     {
             //INDIZAR
         //Seteo el Directorio a indizar
-        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca");
+        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca2");
         //
         if (DirectorioInicial.isDirectory())
         {

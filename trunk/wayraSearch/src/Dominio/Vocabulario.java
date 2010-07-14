@@ -17,7 +17,7 @@ import Gestores.ComparadorTerminoCantidadDocs;
  * 
  *  
  */
-public class Vocabulario implements Serializable
+public final class Vocabulario implements Serializable
 {
     private long cantTerminos;
 

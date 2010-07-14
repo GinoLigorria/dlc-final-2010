@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * 
  */
-public class LectorTextoPlano extends Lector
+public final class LectorTextoPlano extends Lector
 {
 
 

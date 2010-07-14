@@ -5,7 +5,6 @@
 package Gestores;
 
 import java.io.File;
-
 import Dominio.Directorio;
 import Persistencia.Rutas;
 
@@ -14,7 +13,7 @@ import Persistencia.Rutas;
  * 
  *  
  */
-public class GestorDirectorio
+public final class GestorDirectorio
 {
 
     /**

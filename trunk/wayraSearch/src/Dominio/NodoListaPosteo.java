@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * 
  *  
  */
-public class NodoListaPosteo implements Grabable , Comparable
+public final  class NodoListaPosteo implements Grabable 
 {
     private long posicion; // 8 bytes // es la posición donde está el nombre del archivo
 

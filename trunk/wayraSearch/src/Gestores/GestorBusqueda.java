@@ -19,7 +19,7 @@ import Persistencia.Rutas;
  * 
  *  
  */
-public class GestorBusqueda
+public final class GestorBusqueda
 {
 
     /**
@@ -54,7 +54,7 @@ public class GestorBusqueda
 
         Vector vNodosFinal = new Vector();
         vNodosFinal.addAll(vNodoSimples);
-        vNodosFinal.addAll(vNodoMas);
+        vNodosFinal.addAll(vNodoMas); // xq mierda duplica
         vNodosFinal.removeAll(vNodoMenos);
 
         r = buscarDocumentos(vNodosFinal);
@@ -68,6 +68,7 @@ public class GestorBusqueda
      */
     private Vector buscarDocumentos(Vector v)
     {
+
         Vector r = new Vector();
         Iterator iter = v.iterator();
 

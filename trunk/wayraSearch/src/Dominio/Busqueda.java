@@ -9,7 +9,7 @@ package Dominio;
  * 
  *  
  */
-public class Busqueda
+public final class Busqueda
 {
     private StringBuffer criterio;
     private int cantidadResultados;

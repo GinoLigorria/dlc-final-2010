@@ -190,6 +190,7 @@ public class RegisterFile < E extends Grabable >
     }
 
 
+
     /**
      * Borra el RegisterFile del disco
      */
@@ -474,6 +475,7 @@ public class RegisterFile < E extends Grabable >
         {
             r = new Register((Grabable) testigo.getClass().newInstance());
             r.leer(maestro);
+
         } catch (Exception e)
         {
             System.out.println("Error al leer el registro: " + e.getMessage());
@@ -715,15 +717,22 @@ public class RegisterFile < E extends Grabable >
     public long altaDirecta (E obj)
     {
         long resp = -1;
-        resp = registerPos();
-        if (append(obj))
+
+        if( obj != null )
         {
-            return resp;
+            try
+            {
+                goFinal();
+                resp = registerPos();
+                write(new Register(obj));
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error al grabar el registro: " + e.getMessage());
+                System.exit(1);
+            }
         }
-        else
-        {
-            return -1;
-        }
+        return resp;
     }
     /**
      * Agrega un registro en el archivo, sin controlar repetición. El archivo debe estar abierto en modo de grabación.
@@ -750,6 +759,7 @@ public class RegisterFile < E extends Grabable >
         }
         return resp;
     }
+
 
     /**
      * Borra un registro del archivo. La clase del registro buscado debe

@@ -9,7 +9,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-
 import Dominio.Documento;
 import Dominio.NodoListaPosteo;
 import Dominio.Termino;
@@ -20,7 +19,7 @@ import Persistencia.Rutas;
  * 
  *  
  */
-public class GestorTermino
+public final class GestorTermino
 {
 
     /**

@@ -7,14 +7,13 @@ package Dominio;
 import java.io.Serializable;
 import java.util.Vector;
 
-import Persistencia.xml.ParserListaPosteoXML;
 
 /**
  * @author Administrador
  * 
  *  
  */
-public class Termino implements Comparable, Serializable
+public final class Termino implements Comparable, Serializable
 {
 
     private String termino;
@@ -24,8 +23,7 @@ public class Termino implements Comparable, Serializable
     // documento
 
     private long cantDoc; // nr Cantidad de documentos en los que aparece
-
-    //private ParserListaPosteoXML listaPosteo; Borrado por mateo
+   
 
     private ListaPosteo listaPosteo; // Posición de comienzo de la lista de posteo
 
