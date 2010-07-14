@@ -5,24 +5,19 @@
 package Gestores;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Vector;
-
 import Dominio.Documento;
 import Lectores.Lector;
 import Persistencia.Register;
 import Persistencia.Rutas;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Administrador
  * 
  *  
  */
-public class GestorDocumento
+public final class GestorDocumento
 {
     private Documento documento;
 
@@ -137,8 +132,10 @@ public class GestorDocumento
         Documento d =null;
        
             Rutas.getArchivoDocu().seekRegister(pos);
-            Register r = Rutas.getArchivoDocu().leer();
-            Rutas.getArchivoDocu().close();
+            Register r = new Register(new Documento())  ;
+            Rutas.getArchivoDocu().read(r);
+            
+            //Rutas.getArchivoDocu().close();
             d=(Documento) r.getData();
         return d;
     }
@@ -148,7 +145,7 @@ public class GestorDocumento
         long r = -1;
         
             r = Rutas.getArchivoDocu().search(doc);
-            Rutas.getArchivoDocu().close();
+            //Rutas.getArchivoDocu().close();
 
       
           return r;

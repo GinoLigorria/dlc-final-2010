@@ -13,7 +13,7 @@ import Gestores.GestorDirectorio;
  * 
  *  
  */
-public class Directorio
+public final class Directorio
 {
     private File raiz;
 

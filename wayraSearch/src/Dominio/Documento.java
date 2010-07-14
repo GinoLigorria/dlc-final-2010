@@ -15,7 +15,7 @@ import Persistencia.Register;
  * 
  *  
  */
-public class Documento implements Grabable
+public final class Documento implements Grabable
 {
     private String ruta;
 

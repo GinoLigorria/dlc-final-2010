@@ -13,7 +13,7 @@ import Dominio.Termino;
  *
  * 
  */
-public class ComparadorTerminoCantidadDocs implements Comparator
+public final class ComparadorTerminoCantidadDocs implements Comparator
 {
 
     /**

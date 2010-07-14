@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Vector;
 
-public class GestorListaPosteo {
+public final class GestorListaPosteo {
 
 
     public void ordenarListaPosteo()
@@ -29,6 +29,7 @@ public class GestorListaPosteo {
         //Levantar el vocabulario
         Collection c = Rutas.getVocabulario().getVocabulario().values();
         Iterator itr = c.iterator();
+        System.out.println("Grabando Lista de Posteo Ordenada termino: " );
         //por cada termino
         while(itr.hasNext())
         {
@@ -48,12 +49,12 @@ public class GestorListaPosteo {
 
             Iterator itr2 = nodos.iterator();
 
-            System.out.println("Grabando termino: " + term.getTermino());
+            System.out.println(term.getTermino());
 
             while(itr2.hasNext())
             {
                 NodoListaPosteo nlp = (NodoListaPosteo)itr2.next();
-                Rutas.getRFListaPosteoOrdenada().add(nlp);
+                Rutas.getRFListaPosteoOrdenada().append(nlp);//cambiar a append mejora performance
                 System.out.println (nlp.getFrecTermino());
 
 

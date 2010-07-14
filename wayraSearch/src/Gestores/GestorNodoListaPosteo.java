@@ -14,7 +14,7 @@ import Dominio.Termino;
  *
  * 
  */
-public class GestorNodoListaPosteo
+public final class GestorNodoListaPosteo
 {
 
     /**
