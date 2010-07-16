@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Administrador
@@ -48,5 +52,34 @@ public final class LectorTextoPlano extends Lector
         }
         return r;
     }
+    
+    public Hashtable<String, String> getPalabras(String nombreDoc)
+    {
+        BufferedReader br = null;
+        Hashtable<String, String> htReturn  = new Hashtable<String, String>();
+        try {
+            File f = new File(nombreDoc);
+            br = new BufferedReader(new FileReader(f));
+            String aux = br.readLine();
+            htReturn.put(aux, aux);    
+             while(aux !=null)
+            {
+                aux = br.readLine();
+                htReturn.put(aux, aux);                
+            }
+            
+        } catch (Exception ex) {            
+            Logger.getLogger(LectorTextoPlano.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException ex) {
+                Logger.getLogger(LectorTextoPlano.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return htReturn;
+        }                      
+    }
+
+
 
 }

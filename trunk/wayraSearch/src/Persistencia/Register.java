@@ -12,7 +12,6 @@ package Persistencia;
  */
 
 import java.io.*;
-import javax.swing.*;
 
 public class Register < E extends Grabable > implements Grabable
 {

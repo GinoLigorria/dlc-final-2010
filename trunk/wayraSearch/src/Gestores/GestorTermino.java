@@ -72,8 +72,9 @@ public final class GestorTermino
     }
     
     /**
-     * @param vSimples
-     * @param vocabulario
+     * Busca los objetos Terminos en el vocabulario
+     * @param vPal: vector con palabras (string) a buscar
+     * @param vocabulario HashMap del vocabulario.
      */
     public static Vector buscarTerminos(Vector vPal, HashMap vocabulario)
     {
@@ -87,6 +88,10 @@ public final class GestorTermino
             if (t != null)
             {
                 r.add(t);
+            }
+            else
+            {
+                return null;
             }
         }
         
