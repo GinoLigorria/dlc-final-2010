@@ -13,6 +13,7 @@ import Dominio.Documento;
 import Dominio.NodoListaPosteo;
 import Dominio.Termino;
 import Persistencia.Rutas;
+import java.util.Hashtable;
 
 /**
  * @author Administrador
@@ -36,26 +37,57 @@ public final class GestorBusqueda
      */
     public Vector buscar(Busqueda b)
     {
-        Vector r = null;
+        long cantDocs = this.contarDocumentos();
+
+         Vector r = null;
 
         Vector vSimples = extraerPalabras(' ', b.getCriterio());
-        Vector vMas = extraerPalabras('+', b.getCriterio());
-        Vector vMenos = extraerPalabras('-', b.getCriterio());
+        //Vector vMas = extraerPalabras('+', b.getCriterio());
+        //Vector vMenos = extraerPalabras('-', b.getCriterio());
 
         HashMap vocabulario = Rutas.getVocabulario().getVocabulario();
 
+        //Obtenemos los objetos términos de las palabras ingresadas
         vSimples = GestorTermino.buscarTerminos(vSimples, vocabulario);
-        vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
-        vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
+        //chequear si encontro terminos para todos las palabras
 
+        if (vSimples == null)
+        {
+            // No se han encontrado resultados para la búsqueda
+            return null;
+        }
+
+        //Calcular las frec Inversas
+
+        //Ordenarlos x Idf decre
+
+        //Obtener los primero R documentos
+        
+        // Obtener el módulo de la consulta
+        
+        
+        //Por cada documento obtenido
+        
+            //Calcular el modulo del documento para la query
+        
+        //Aplicar la funcion de Similitud
+
+
+        //vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
+        //vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
+
+        
+
+
+        //busca los nodos de las palabras
         Vector vNodoSimples = buscarNodos(vSimples);
-        Vector vNodoMas = buscarNodos(vSimples);
-        Vector vNodoMenos = buscarNodos(vSimples);
+        //Vector vNodoMas = buscarNodos(vSimples);
+        //Vector vNodoMenos = buscarNodos(vSimples);
 
         Vector vNodosFinal = new Vector();
         vNodosFinal.addAll(vNodoSimples);
-        vNodosFinal.addAll(vNodoMas); // xq mierda duplica
-        vNodosFinal.removeAll(vNodoMenos);
+        //vNodosFinal.addAll(vNodoMas); // xq mierda duplica
+        //vNodosFinal.removeAll(vNodoMenos);
 
         r = buscarDocumentos(vNodosFinal);
 
@@ -63,12 +95,14 @@ public final class GestorBusqueda
     }
 
     /**
+     *
      * @param nodosFinal
      * @return
      */
     private Vector buscarDocumentos(Vector v)
     {
 
+        //ordenar el vector crecientemente de acuerdo a su idf
         Vector r = new Vector();
         Iterator iter = v.iterator();
 
@@ -88,7 +122,7 @@ public final class GestorBusqueda
     /**
      * Busca los Nodos en los que se encuentran el vector de terminos.
      * @param Vector de términos
-     * @return
+     * @return Vector nodosListaPosteo de los términos
      */
     private Vector buscarNodos(Vector v)
     {
@@ -118,6 +152,7 @@ public final class GestorBusqueda
         StringBuffer buffer = new StringBuffer();
         boolean b = false;
 
+        //recorro el string
         for (int i = 0; i < criterio.length(); i++)
         {
             char c = criterio.charAt(i);
@@ -127,18 +162,25 @@ public final class GestorBusqueda
             {
                 b = true;
             }
-
+            //agrego únicamente letras y dígitos
             if (b && (Character.isLetterOrDigit(c) || c == '-'))
             {
                 buffer.append(c);
             } else
             {
-                if (buffer.length() > 0)
+                //
+                if (buffer.length() > 2)
                 {
-                    Termino t = new Termino();
-                    t.setTermino(buffer.toString());
-                    r.add(t);
-                    buffer = new StringBuffer();
+                    //verifico que no sea stop word
+                    String palabra = buffer.toString();
+                    if(!esStopWord(palabra))
+                    {
+                        Termino t = new Termino();
+                        t.setTermino(palabra);
+                        r.add(t);
+                        buffer = new StringBuffer();    
+                    }
+
                 }
                 if (c == prefijo)
                 {
@@ -151,6 +193,28 @@ public final class GestorBusqueda
         }
 
         return r;
+    }
+    /**
+     * Cantidad de Documentos en la base
+     * @return La cantidad de documentos de la base
+     */
+    public long contarDocumentos()
+    {
+        return Rutas.getArchivoDocu().registerCount();
+    }
+
+    private boolean esStopWord(String palabra) {
+
+        Hashtable<String, String> hStopWords = Rutas.getStopWords();
+        if (hStopWords.containsKey(palabra))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
 }

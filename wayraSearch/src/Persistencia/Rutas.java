@@ -15,9 +15,16 @@ import java.io.ObjectOutputStream;
 import Dominio.Documento;
 import Dominio.NodoListaPosteo;
 import Dominio.Vocabulario;
+import Lectores.Lector;
+import Lectores.LectorTextoPlano;
 import Persistencia.xml.ParserLectorXML;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.RandomAccessFile;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Administrador
@@ -37,6 +44,10 @@ public class Rutas
     private static  RegisterFile<NodoListaPosteo> rfListasPosteo;
 
     private static RegisterFile<NodoListaPosteo> rfListaPosteoOrdenada;
+
+    private static Hashtable<String, String> htStopWords;
+
+
 
     /**
      *  
@@ -211,5 +222,21 @@ public class Rutas
             rfListaPosteoOrdenada = new RegisterFile<NodoListaPosteo>("listaPosteoOrdenada.dat", "rw", new NodoListaPosteo());
         }
         return rfListaPosteoOrdenada;
+    }
+
+    public static long getCantDocsBase()
+    {
+        return getArchivoDocu().registerCount();
+    }
+
+    public static Hashtable<String, String> getStopWords() {
+
+        if (htStopWords == null)
+        {
+            LectorTextoPlano l = new LectorTextoPlano();
+            htStopWords = l.getPalabras("stopWords.dat");
+        }
+
+            return htStopWords;
     }
 }

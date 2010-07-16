@@ -4,8 +4,10 @@
  */
 package Dominio;
 
+import Persistencia.Rutas;
 import java.io.Serializable;
 import java.util.Vector;
+import java.lang.Math;
 
 
 /**
@@ -122,6 +124,20 @@ public final class Termino implements Comparable, Serializable
     public Vector buscarNodos()
     {
         return listaPosteo.buscarNodos((int) cantDoc);
+    }
+    /**
+     * Calcula la frecuencia inversa del término
+     * @param cantDocs: cantidad de Documentos de la base
+     * @return frecuencia inversa
+     */
+    public double getIdf()
+    {
+        double resp=-1;
+        if (cantDoc > 0)
+        {
+        resp = Math.log10(Rutas.getCantDocsBase()/cantDoc);
+        }
+        return resp;
     }
 
 }
