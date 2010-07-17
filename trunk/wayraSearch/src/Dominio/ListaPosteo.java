@@ -86,12 +86,12 @@ public void cargarListaPosteo(RandomAccessFile raf)
  * @param cantidad de nodos a devolver
  * @return Vector de NodosListaPosteo
  */
-public Vector buscarNodos(int cantidad)
+public Vector<NodoListaPosteo> buscarNodos(int cantidad)
 {
 
  try {
             //declaro el vector
-            Vector nodos = new Vector();
+            Vector<NodoListaPosteo> nodos = new Vector();
             //obtener nodos hasta que el next sea -1
 
             //

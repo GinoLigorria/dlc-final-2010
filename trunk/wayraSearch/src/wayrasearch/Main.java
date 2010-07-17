@@ -44,9 +44,9 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("the");
+        StringBuffer criterio = new StringBuffer("problems");
         busqueda.setCriterio(criterio);
-        busqueda.setCantidadResultados(10);
+         busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
         Rutas.materializarVocabulario();
         GestorBusqueda gbusqueda = new GestorBusqueda();

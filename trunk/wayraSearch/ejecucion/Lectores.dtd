@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT lectores (lector+)>
+<!ELEMENT lector (tipo+)>
+<!ATTLIST lector
+          class CDATA #REQUIRED>
+<!ELEMENT tipo (#PCDATA)>

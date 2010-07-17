@@ -89,10 +89,7 @@ public final class GestorTermino
             {
                 r.add(t);
             }
-            else
-            {
-                return null;
-            }
+           
         }
         
         Comparator comp = new ComparadorTerminoCantidadDocs();
