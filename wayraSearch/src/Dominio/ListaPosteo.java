@@ -98,12 +98,12 @@ public Vector<NodoListaPosteo> buscarNodos(int cantidad)
             if (posicionInicial != -1 && nodos.size() <= cantidad)
             {
                 //obtengo el primer nodo
-                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(posicionInicial).getData();
+                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getRFListaPosteo().getRegister(posicionInicial).getData();
                 nodos.add(nodo);
                 //mientras existan nodos
                 while (nodo.getNext()!= -1 && nodos.size() <= cantidad)
                 {
-                    nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(nodo.getNext()).getData();
+                    nodo = (NodoListaPosteo) Rutas.getRFListaPosteo().getRegister(nodo.getNext()).getData();
                     nodos.add(nodo);
                 }
                 // tengo el vector con todos los nodos
@@ -129,12 +129,12 @@ public Vector getVectorDeNodos()
             if (posicionInicial != -1)
             {
                 //obtengo el primer nodo
-                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(posicionInicial).getData();
+                NodoListaPosteo nodo = (NodoListaPosteo) Rutas.getRFListaPosteo().getRegister(posicionInicial).getData();
                 nodos.add(nodo);
                 //mientras existan nodos
                 while (nodo.getNext()!= -1)
                 {
-                    nodo = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(nodo.getNext()).getData();
+                    nodo = (NodoListaPosteo) Rutas.getRFListaPosteo().getRegister(nodo.getNext()).getData();
                     nodos.add(nodo);
                 }
                 // tengo el vector con todos los nodos
@@ -154,7 +154,7 @@ public void insertar(Dominio.NodoListaPosteo node)
         try {
             //obtener posición de último nodo grabado
             //insertar en archivo
-            long posicionActual = Rutas.getListaPosteo().altaDirecta(node); //altaDirecta mejora performance, no busca
+            long posicionActual = Rutas.getRFListaPosteo().altaDirecta(node); //altaDirecta mejora performance, no busca
             //setear el next del último nodo grabado con la posición del reciente grabado
             if (ultimaPosicion == -1)
             {
@@ -166,9 +166,9 @@ public void insertar(Dominio.NodoListaPosteo node)
                 //PARA EVITAR LLER ACTUALIZAR Y DESPUES ESCRIBIR
                 // SE PUEDE DEFINIR UN METODO EN REGISTERFILE QUE ESCRIBA SOLO EL NEXT
                 // POR EJEMPLO WRITENEXT
-            Dominio.NodoListaPosteo nodoAnterior = (NodoListaPosteo) Rutas.getListaPosteo().getRegister(ultimaPosicion).getData();
+            Dominio.NodoListaPosteo nodoAnterior = (NodoListaPosteo) Rutas.getRFListaPosteo().getRegister(ultimaPosicion).getData();
             nodoAnterior.setNext(posicionActual);
-            Rutas.getListaPosteo().writeRegister(new Register(nodoAnterior), ultimaPosicion);
+            Rutas.getRFListaPosteo().writeRegister(new Register(nodoAnterior), ultimaPosicion);
             }
             ultimaPosicion = posicionActual;
             //indicesListaPosteo.add(posicionActual);

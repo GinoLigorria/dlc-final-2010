@@ -6,14 +6,20 @@
 package wayrasearch;
 
 import Dominio.Busqueda;
+import Dominio.Documento;
 import Dominio.NodoListaPosteo;
+import Dominio.Vocabulario;
+import Exceptions.RegistroInexistenteException;
 import Gestores.GestorBusqueda;
 import Gestores.GestorDirectorio;
 import Persistencia.Register;
+import Persistencia.RegisterFile;
 import Persistencia.Rutas;
 import java.io.Console;
 import java.io.File;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,9 +35,11 @@ public class Main {
 
     //testInsercionListaPosteo();
     //Rutas.borrar();
-   //testIndexar();
-    testBuscar();
+    //  testIndexar();
+    //testBuscar();
     //calcularTamanioTotalArchivos();
+
+    comprobarSanidadArchivos();
         
 
           
@@ -44,7 +52,7 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("problems");
+        StringBuffer criterio = new StringBuffer("possibilities");
         busqueda.setCriterio(criterio);
          busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
@@ -92,21 +100,21 @@ public class Main {
         nlp.setTipo("txt");
 
         //creo register File
-        Rutas.getListaPosteo().add(nlp);
+        Rutas.getRFListaPosteo().add(nlp);
 
 
         //ahora pruebo leer
 
-        for (int i = 0; i < Rutas.getListaPosteo().registerCount(); i++) {
+        for (int i = 0; i < Rutas.getRFListaPosteo().registerCount(); i++) {
 
 
             NodoListaPosteo nlp2 = new NodoListaPosteo();
             Register reg = new Register(nlp2);
 
-            Rutas.getListaPosteo().rewind();
-              while (!Rutas.getListaPosteo().eof())
+            Rutas.getRFListaPosteo().rewind();
+              while (!Rutas.getRFListaPosteo().eof())
               {
-                   Rutas.getListaPosteo().read(reg);
+                   Rutas.getRFListaPosteo().read(reg);
                    System.out.println(reg.getData().toString());
               }
         }
@@ -139,6 +147,80 @@ public class Main {
 
 
         }
+    }
+
+
+    public static void comprobarSanidadArchivos()
+    {
+        String mensaje;
+        RegisterFile<Documento> rfArchivoDocu = Rutas.getArchivoDocu();
+        RegisterFile<NodoListaPosteo> rfListaPosteo = Rutas.getRFListaPosteo();
+        Vocabulario vocabulario = Rutas.getVocabulario();
+        long cantDocs = rfArchivoDocu.registerCount();
+        //archivo Documentos
+        if (rfArchivoDocu.exists())
+        {
+            //lo recorro y muestro su contenido
+
+            System.out.println("Cantidad de Documentos: " + cantDocs);
+            for (long i = 0; i < cantDocs; i++) {
+                try {
+                    Documento d = (Documento) rfArchivoDocu.getRegister(i).getData();
+                    System.out.println("Documento: " + d.toString());
+                } catch (RegistroInexistenteException ex) {
+                    System.out.println("Error al leer Documento nro: " + i);
+                }
+            }
+
+            System.out.println("Termino de verificar Archivo de Documentos");
+        }
+        else
+        {
+         mensaje = "No existe el archivo de Documentos\n"  ;
+        }
+
+        //archivo vocabulario
+
+        if (vocabulario.getCantDocumentos()!= cantDocs)
+        {
+            System.out.println("La cantidad de Documentos del Vocabulario no coincide con la del archivo Documento");
+        }
+        else
+        {
+            if (!vocabulario.verificarSanidad())
+            {
+                System.out.println("El archivo de vocabulario contiene errores");
+            }
+        }
+
+        //archivo listasDePosteo
+
+        if (rfListaPosteo.exists())
+        {
+            //recorro la lista de posteo
+            long cantNLP = rfListaPosteo.registerCount();
+            System.out.println("Cantidad de Documentos: " + cantDocs);
+            for (long i = 0; i < cantNLP; i++) {
+                try {
+                    NodoListaPosteo nlp = (NodoListaPosteo) rfListaPosteo.getRegister(i).getData();
+                    System.out.println("Nodo LP: " + nlp.toString());
+                } catch (RegistroInexistenteException ex) {
+                    System.out.println("Error al leer el NLP nro: " + i);
+                }
+            }
+
+            System.out.println("Termino de verificar Archivo de NLP");
+
+        }
+        else
+        {
+            System.out.println("No existe el archivo de Lista de Posteo");
+        }
+
+        //archivo listaDePosteoOrdenada
+
+
+
     }
 
 

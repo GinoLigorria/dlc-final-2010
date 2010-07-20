@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Gestores.ComparadorTerminoCantidadDocs;
+import java.util.Set;
 
 /**
  * @author Administrador
@@ -136,5 +137,23 @@ public final class Vocabulario implements Serializable
     public void setCoeficienteStopWords(double coeficienteStopWords)
     {
         this.coeficienteStopWords = coeficienteStopWords;
+
+        
     }
+
+    public boolean verificarSanidad()
+    {
+        Boolean respuesta = false;
+        Set s = vocabulario.keySet();
+        Iterator i = s.iterator();
+        while(i.hasNext())
+        {
+            Termino t = (Termino) i.next();
+            System.out.println("Termino : " + t.getTermino() );
+            respuesta = true;
+        }
+
+        return respuesta;
+    }
+
 }
