@@ -23,7 +23,7 @@ public class ComparadorNodosListaPosteo implements Comparator {
     RegisterFile<NodoListaPosteo> rfnlp;
     public ComparadorNodosListaPosteo()
     {
-        rfnlp = Rutas.getListaPosteo();
+        rfnlp = Rutas.getRFListaPosteo();
     }
 
     public int compare(Object o1, Object o2)  {

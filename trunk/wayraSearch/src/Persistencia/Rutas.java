@@ -60,11 +60,11 @@ public class Rutas
 
     public static RegisterFile getArchivoDocu()
     {
-       if (archivoDocu == null)     
+       if (archivoDocu == null || !archivoDocu.exists())
        {
        archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());
        }
-        return archivoDocu;
+       return archivoDocu;
     }
 
     public static void setArchivoDocu(RegisterFile archivoDocu)
@@ -116,7 +116,7 @@ public class Rutas
         {
             File f = archivoVocabulario;
             FileOutputStream fos = new FileOutputStream(f);
-             BufferedOutputStream bos = new BufferedOutputStream(fos);//mejora performance
+            BufferedOutputStream bos = new BufferedOutputStream(fos);//mejora performance
             ObjectOutputStream oos = new ObjectOutputStream(bos);
             oos.writeObject(vocabulario);
 
@@ -149,9 +149,11 @@ public class Rutas
         try
         {
             FileInputStream fis = new FileInputStream(f);
-            BufferedInputStream bis = new BufferedInputStream(fis); //mejora performance
-            ObjectInputStream ois = new ObjectInputStream(bis);
-            vocabulario = (Vocabulario) ois.readObject();
+            //BufferedInputStream bis = new BufferedInputStream(fis); //mejora performance
+            //ObjectInputStream ois = new ObjectInputStream(bis);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object ob = ois.readObject();
+            vocabulario = (Vocabulario) ob;
 
             ois.close();
             fis.close();
@@ -196,19 +198,27 @@ public class Rutas
             }
         }
 
-        if (rfListasPosteo.exists() && rfListasPosteo.canDelete())
+        if (getRFListaPosteo().exists() && getRFListaPosteo().canDelete())
         {
             if(!rfListasPosteo.delete())
             {
                  System.out.println("No se pudo borrar el archivo listaPosteo ");
             }
         }
+
+        if (getRFListaPosteoOrdenada().exists() && getRFListaPosteoOrdenada().canDelete())
+        {
+            if(!rfListaPosteoOrdenada.delete())
+            {
+                 System.out.println("No se pudo borrar el archivo listaPosteo ordenada");
+            }
+        }
        
     }
 
-    public  static RegisterFile<NodoListaPosteo> getListaPosteo()
+    public  static RegisterFile<NodoListaPosteo> getRFListaPosteo()
     {
-        if (rfListasPosteo == null)
+        if (rfListasPosteo == null || !rfListasPosteo.exists())
         {
              rfListasPosteo =  new RegisterFile<NodoListaPosteo>("listasPosteo.dat", "rw", new NodoListaPosteo());
         }
@@ -217,7 +227,7 @@ public class Rutas
 
     public static RegisterFile<NodoListaPosteo> getRFListaPosteoOrdenada()
     {
-        if (rfListaPosteoOrdenada == null)
+        if (rfListaPosteoOrdenada == null || !rfListaPosteoOrdenada.exists())
         {
             rfListaPosteoOrdenada = new RegisterFile<NodoListaPosteo>("listaPosteoOrdenada.dat", "rw", new NodoListaPosteo());
         }
