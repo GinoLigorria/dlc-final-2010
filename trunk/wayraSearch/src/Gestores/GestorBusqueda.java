@@ -39,9 +39,9 @@ public final class GestorBusqueda
      * @param b
      * @return Vector de Documentos
      */
-    public Vector buscar(Busqueda b)
+    public Vector<Resultado> buscar(Busqueda b)
     {
-        long cantDocs = this.contarDocumentos();
+        
 
          Vector r = null;
 
@@ -74,29 +74,9 @@ public final class GestorBusqueda
 
          Vector<Resultado> vResultados = obtenerSimilitud(htPesosConsult, htPesosDocumentos);
 
-         //ordenar los archivos
-         
-         
-         
-        //vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
-        //vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
+                
 
-        
-
-
-        //busca los nodos de las palabras
-        Vector vNodoSimples = buscarNodos(vTerminos);
-        //Vector vNodoMas = buscarNodos(vSimples);
-        //Vector vNodoMenos = buscarNodos(vSimples);
-
-        Vector vNodosFinal = new Vector();
-        vNodosFinal.addAll(vNodoSimples);
-        //vNodosFinal.addAll(vNodoMas); // xq mierda duplica
-        //vNodosFinal.removeAll(vNodoMenos);
-
-        r = buscarDocumentos(vNodosFinal);
-
-        return r;
+        return vResultados;
     }
 
     /**
