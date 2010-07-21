@@ -14,6 +14,7 @@ import Dominio.NodoListaPosteo;
 import Dominio.Resultado;
 import Dominio.Termino;
 import Persistencia.Rutas;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -39,11 +40,10 @@ public final class GestorBusqueda
      * @param b
      * @return Vector de Documentos
      */
-    public Vector buscar(Busqueda b)
+    public ArrayList<Documento> buscar(Busqueda b)
     {
-        long cantDocs = this.contarDocumentos();
-
-         Vector r = null;
+        
+        ArrayList<Documento> r = null;
 
         Vector vPalabras = extraerPalabras(' ', b.getCriterio());
         //Vector vMas = extraerPalabras('+', b.getCriterio());
@@ -76,7 +76,7 @@ public final class GestorBusqueda
 
          //ordenar los archivos
          
-         
+         r = convertirADocumentos(vResultados);
          
         //vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
         //vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
@@ -85,16 +85,16 @@ public final class GestorBusqueda
 
 
         //busca los nodos de las palabras
-        Vector vNodoSimples = buscarNodos(vTerminos);
+        //Vector vNodoSimples = buscarNodos(vTerminos);
         //Vector vNodoMas = buscarNodos(vSimples);
         //Vector vNodoMenos = buscarNodos(vSimples);
 
-        Vector vNodosFinal = new Vector();
-        vNodosFinal.addAll(vNodoSimples);
+        //Vector vNodosFinal = new Vector();
+        //vNodosFinal.addAll(vNodoSimples);
         //vNodosFinal.addAll(vNodoMas); // xq mierda duplica
         //vNodosFinal.removeAll(vNodoMenos);
 
-        r = buscarDocumentos(vNodosFinal);
+        //r = buscarDocumentos(vNodosFinal);
 
         return r;
     }
@@ -141,6 +141,19 @@ public final class GestorBusqueda
         }
 
         return r;
+    }
+
+    private ArrayList<Documento> convertirADocumentos(Vector<Resultado> res) {
+
+
+        ArrayList<Documento> respuesta = new ArrayList<Documento>();
+        Iterator iter = res.iterator();
+        while (iter.hasNext())
+        {
+            Resultado t = (Resultado) iter.next();
+            respuesta.add(t.getDoc());
+        }
+        return respuesta;
     }
 
     /**
