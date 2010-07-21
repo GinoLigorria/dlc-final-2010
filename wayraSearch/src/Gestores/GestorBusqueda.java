@@ -14,6 +14,7 @@ import Dominio.NodoListaPosteo;
 import Dominio.Resultado;
 import Dominio.Termino;
 import Persistencia.Rutas;
+import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
