@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import Dominio.Documento;
 import Dominio.Termino;
+import Persistencia.Rutas;
+import java.util.Hashtable;
 
 /**
  * @author Administrador
@@ -79,20 +81,24 @@ public class Lector
                     buffer.append(c);
                 } else
                 {
-                    if (buffer.length() > 2 && buffer.length() < 30) // creo cada termino
+                    if (buffer.length() > 2 && buffer.length() < 30  ) // creo cada termino
                     {
-                        Termino t = new Termino();
-                        t.setTermino(buffer.toString());
+                        if(!esStopWord(buffer.toString()))
+                        {
+                            Termino t = new Termino();
+                            t.setTermino(buffer.toString());
 
-                        if (r.contains(t))
-                        {
-                            int ind = r.indexOf(t);
-                            t = (Termino) r.get(ind);
-                        } else
-                        {
-                            r.add(t);
+                            if (r.contains(t))
+                            {
+                                int ind = r.indexOf(t);
+                                t = (Termino) r.get(ind);
+                            } else
+                            {
+                                r.add(t);
+                            }
+                            t.addFrecuencia();
                         }
-                        t.addFrecuencia();
+                        
                     }
                     buffer = new StringBuffer();
                 }
@@ -100,6 +106,21 @@ public class Lector
         }
 
         return r;
+    }
+
+
+    private boolean esStopWord(String palabra) {
+
+        Hashtable<String, String> hStopWords = Rutas.getStopWords();
+        if (hStopWords.containsKey(palabra))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
 
