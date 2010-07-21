@@ -17,7 +17,7 @@ import javax.faces.FacesException;
  *
  * @version Buscar.java
  * @version Created on 18/07/2010, 23:12:00
- * @author Facu
+ * @author Rocchietti Martin
  */
 public class Buscar extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">

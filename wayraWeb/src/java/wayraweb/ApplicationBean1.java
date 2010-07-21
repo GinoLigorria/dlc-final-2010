@@ -2,7 +2,7 @@
  * ApplicationBean1.java
  *
  * Created on 18/07/2010, 23:10:32
- * Copyright Facu
+ * Copyright Rocchietti Martin
  */
 package wayraweb;
 
