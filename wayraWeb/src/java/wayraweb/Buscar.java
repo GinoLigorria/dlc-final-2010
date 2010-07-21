@@ -4,6 +4,10 @@
  */
 package wayraweb;
 
+import Dominio.Busqueda;
+import Dominio.Documento;
+import Gestores.GestorBusqueda;
+import Persistencia.Rutas;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import java.util.ArrayList;
 import javax.faces.FacesException;
@@ -140,8 +144,17 @@ public class Buscar extends AbstractPageBean {
 
     public String hacerBusqueda()
     {
-        // Levantar los datos de un archivo de texto? Según me dijiste
-        // documentos = ManejadorDeArchivos.GetResultados(cadenaDeBusqueda);
+        
+        Busqueda busqueda = new Busqueda();
+        StringBuffer criterio = new StringBuffer(cadenaDeBusqueda);
+        busqueda.setCriterio(criterio);
+        busqueda.setCantidadResultados(10);
+        //levanto el archivo de vocabulario
+        Rutas.materializarVocabulario();
+        GestorBusqueda gbusqueda = new GestorBusqueda();
+        documentos = gbusqueda.buscar(busqueda);
+
+        //debo llenar el arraylist documentos
         return null;
     }
 
