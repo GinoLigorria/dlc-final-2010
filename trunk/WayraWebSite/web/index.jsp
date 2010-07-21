@@ -10,13 +10,19 @@
         <title>WayraSearch</title>
     </head>
     <body>
-    <h1 align="center">WayraSearch</h1>
+    <h1 align="center">
+        <b><font color="red" size="15">W</font>
+        <font color="blue" size="15">a</font>
+        <font color="orange" size="15">y</font>
+        <font color="green" size="15">r</font>
+        <font color="black" size="15">a</font></b>
+        <br>
+        <font color="black" size="5"><i>Search</i></font></h1>
     <form action="buscar.jsp">
         <table align="center">
-            <tr><td><input type="text" name="cadena" value="" align="center"></input></td></tr>
-            <tr><td><input type="submit" align="center" name="btnBuscar" value="Buscar"</td></tr>
-            <tr></tr>
-            <tr></tr>
+            <tr><td align="center"><input type="text" name="cadena" value="" align="left"></input></td></tr>
+            <tr><td align="center"><input maxlength="500" type="submit" align="center" name="btnBuscar" value="Buscar"  </td></tr>
+            
         </table>
 
 
@@ -27,3 +33,5 @@
     
     </body>
 </html>
+
+
