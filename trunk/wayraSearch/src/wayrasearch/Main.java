@@ -35,11 +35,11 @@ public class Main {
 
     //testInsercionListaPosteo();
     //Rutas.borrar();
-    //  testIndexar();
+      testIndexar();
     //testBuscar();
     //calcularTamanioTotalArchivos();
 
-    comprobarSanidadArchivos();
+    //comprobarSanidadArchivos();
         
 
           
@@ -67,7 +67,7 @@ public class Main {
     {
             //INDIZAR
         //Seteo el Directorio a indizar
-        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca2");
+        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca");
         //
         if (DirectorioInicial.isDirectory())
         {
@@ -155,6 +155,7 @@ public class Main {
         String mensaje;
         RegisterFile<Documento> rfArchivoDocu = Rutas.getArchivoDocu();
         RegisterFile<NodoListaPosteo> rfListaPosteo = Rutas.getRFListaPosteo();
+        RegisterFile<NodoListaPosteo> rfListaPosteoOrdenada = Rutas.getRFListaPosteoOrdenada();
         Vocabulario vocabulario = Rutas.getVocabulario();
         long cantDocs = rfArchivoDocu.registerCount();
         //archivo Documentos
@@ -219,6 +220,27 @@ public class Main {
 
         //archivo listaDePosteoOrdenada
 
+         if (rfListaPosteoOrdenada.exists())
+        {
+            //recorro la lista de posteo
+            long cantNLP = rfListaPosteoOrdenada.registerCount();
+            System.out.println("Cantidad de Documentos: " + cantDocs);
+            for (long i = 0; i < cantNLP; i++) {
+                try {
+                    NodoListaPosteo nlp = (NodoListaPosteo) rfListaPosteoOrdenada.getRegister(i).getData();
+                    System.out.println("Nodo LP: " + nlp.toString());
+                } catch (RegistroInexistenteException ex) {
+                    System.out.println("Error al leer el NLP nro: " + i);
+                }
+            }
+
+            System.out.println("Termino de verificar Archivo de NLP Ordenada");
+
+        }
+        else
+        {
+            System.out.println("No existe el archivo de Lista de Posteo Ordenada");
+        }
 
 
     }
