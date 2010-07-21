@@ -39,7 +39,7 @@ public class Rutas
 
     private static Vocabulario vocabulario;
 
-    private static File archivoVocabulario = new File("vocabulario.dat");
+    private static File archivoVocabulario = new File("C:\\Proyecto DLC 2010\\WayraWebSite\\src\\vocabulario.dat");
 
     private static  RegisterFile<NodoListaPosteo> rfListasPosteo;
 
@@ -62,7 +62,7 @@ public class Rutas
     {
        if (archivoDocu == null || !archivoDocu.exists())
        {
-       archivoDocu = new RegisterFile("docs.dat", "rw", new Documento());
+       archivoDocu = new RegisterFile("C:\\Proyecto DLC 2010\\WayraWebSite\\src\\docs.dat", "rw", new Documento());
        }
        return archivoDocu;
     }
@@ -220,7 +220,7 @@ public class Rutas
     {
         if (rfListasPosteo == null || !rfListasPosteo.exists())
         {
-             rfListasPosteo =  new RegisterFile<NodoListaPosteo>("listasPosteo.dat", "rw", new NodoListaPosteo());
+             rfListasPosteo =  new RegisterFile<NodoListaPosteo>("C:\\Proyecto DLC 2010\\WayraWebSite\\src\\listasPosteo.dat", "rw", new NodoListaPosteo());
         }
         return rfListasPosteo;
     }
@@ -229,7 +229,7 @@ public class Rutas
     {
         if (rfListaPosteoOrdenada == null || !rfListaPosteoOrdenada.exists())
         {
-            rfListaPosteoOrdenada = new RegisterFile<NodoListaPosteo>("listaPosteoOrdenada.dat", "rw", new NodoListaPosteo());
+            rfListaPosteoOrdenada = new RegisterFile<NodoListaPosteo>("C:\\Proyecto DLC 2010\\WayraWebSite\\src\\listaPosteoOrdenada.dat", "rw", new NodoListaPosteo());
         }
         return rfListaPosteoOrdenada;
     }
@@ -244,7 +244,8 @@ public class Rutas
         if (htStopWords == null)
         {
             LectorTextoPlano l = new LectorTextoPlano();
-            htStopWords = l.getPalabras("stopWords.dat");
+            String s="C:\\Proyecto DLC 2010\\WayraWebSite\\src\\stopWords.dat";
+            htStopWords = l.getPalabras(s);
         }
 
             return htStopWords;

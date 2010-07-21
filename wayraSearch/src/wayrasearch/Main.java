@@ -35,8 +35,8 @@ public class Main {
 
     //testInsercionListaPosteo();
     //Rutas.borrar();
-      testIndexar();
-    //testBuscar();
+    //  testIndexar();
+    testBuscar();
     //calcularTamanioTotalArchivos();
 
     //comprobarSanidadArchivos();
@@ -52,7 +52,7 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("possibilities");
+        StringBuffer criterio = new StringBuffer("stream");
         busqueda.setCriterio(criterio);
          busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
@@ -123,7 +123,7 @@ public class Main {
 
     public static void calcularTamanioTotalArchivos()
     {
-        File DirectorioInicial = new File("C:\\Users\\Mateo Guzman\\Documents\\Faku\\DLC\\TPFinal\\DLC-Final-2010\\rfc");
+        File DirectorioInicial = new File("C:\\Proyecto DLC 2010\\nico");
         //
         long tamanioTotal =0;
         if (DirectorioInicial.isDirectory())
