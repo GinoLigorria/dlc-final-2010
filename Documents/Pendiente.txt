@@ -1,0 +1,16 @@
+Testear funcionamiento del indizador. 
+Chequear si los documentos han sido generados correctamente. (Se creó un método)
+Verificar que se puedan agregar documentos a una indizacion ya hecha. (Mateo)
+
+Deteccion de stopwords por cantidad de documentos en los que aparecen (coeficiente stopwords)
+
+Testear busquedas (Nico)
+
+Terminar parte web (Martin)
+Unir web con lógica (Todos)
+
+Como hacer para hacerlo funcionar como servidor. (Pendiente)
+Donde ubicar los documentos. (Mateo)
+
+Chequear por nombres de autor. (Martin)
+
