@@ -52,10 +52,11 @@ public class Main {
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
-        StringBuffer criterio = new StringBuffer("stream");
+        StringBuffer criterio = new StringBuffer("network");
         busqueda.setCriterio(criterio);
          busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
+                
         Rutas.materializarVocabulario();
         GestorBusqueda gbusqueda = new GestorBusqueda();
         gbusqueda.buscar(busqueda);
@@ -167,7 +168,7 @@ public class Main {
             for (long i = 0; i < cantDocs; i++) {
                 try {
                     Documento d = (Documento) rfArchivoDocu.getRegister(i).getData();
-                    System.out.println("Documento: " + d.toString());
+                    System.out.println("Documento: " + d.getRuta());
                 } catch (RegistroInexistenteException ex) {
                     System.out.println("Error al leer Documento nro: " + i);
                 }
@@ -177,7 +178,7 @@ public class Main {
         }
         else
         {
-         mensaje = "No existe el archivo de Documentos\n"  ;
+         mensaje = "No existe el archivo de Documentos\n";
         }
 
         //archivo vocabulario
