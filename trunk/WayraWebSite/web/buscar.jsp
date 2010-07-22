@@ -25,36 +25,46 @@
             <tr><td align="center"><input maxlength="500" type="submit" align="center" name="btnBuscar" value="Buscar"  </td></tr>
         </table>
     </form>
-    <h2 align="left"><font size="5" color="blue"><i>Results</i></font></h2>
+    <h3 align="left"><font size="5" color="blue"><i>Results</i></font></h3>
 <table align="left">
 <%
+long inicio = System.currentTimeMillis();
 ArrayList a=new ArrayList<Documento>();
 Buscar b =new Buscar();
 a=b.hacerBusqueda(s);
+int count=0;
+StringBuffer url=request.getRequestURL();
+String url1=url.toString();
+url1=url1.substring(0,url1.lastIndexOf('/')+1);
 for(int i=0;i<a.size();i++)
 {
 Documento doc=(Documento)a.get(i);
 String st=doc.getRuta();
+st=st.substring(st.lastIndexOf('\\')+1, st.length());
 String breaf=doc.getBrief();
 %>
 <tr>
-        
-        <td><br><%=st.toString()%></br></td>
+
+
+
+        <td><br><a href="<%=st.toString()%>"><%=st.toString()%></a></br></td>
         </tr>
         <tr>
-        <td><font color="#D0D0D0"> <i><%=breaf.toString()%></i></font> </td>
+        <td><font color="black"> <i><%=breaf.toString()%></i></font> </td>
 
 </tr>
 <%
+count++;
 }
+long fin = (System.currentTimeMillis() - inicio)/1000;
 %>
+
+<H2><font size="2" color="black"><i>Cantidad de resultados: <%=String.valueOf(count)%> - Tiempo transcurrido aprox. <%=String.valueOf(fin)%> Seg.</i></font></H2>
+<!--H4><font size="2" color="black"><i>Tiempo transcurrido aprox. %=String.valueOf(fin)%> Seg.</i></font></H4!-->
 <tr>
-
 <td align="center"><br><br>
-    <link rel="index" href="index.jsp" type="text" >
-    <a href="index.jsp" type="text/html">Volver</a></link>
+    <a href="index.jsp" type="text/html">Volver</a>
 </td>
-
 </tr>
 </table>
 
