@@ -344,7 +344,7 @@ public final class GestorBusqueda
         
 
         //Por cada Documento
-
+        
         Enumeration<Documento> enumerador = htDocumentos.keys();
         while (enumerador.hasMoreElements())
         {
