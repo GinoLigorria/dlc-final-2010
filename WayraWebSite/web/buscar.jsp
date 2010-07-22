@@ -4,6 +4,7 @@
 <%@page import="wayraWeb.Buscar"%>
 <%@page import="Dominio.Documento"%>
 <%@page import="java.util.ArrayList"%>
+
 <% String s=request.getParameter("cadena");%>
 
 <html>
@@ -40,14 +41,15 @@ for(int i=0;i<a.size();i++)
 {
 Documento doc=(Documento)a.get(i);
 String st=doc.getRuta();
-st=st.substring(st.lastIndexOf('\\')+1, st.length());
+String aux=st;
+st=st.substring(st.lastIndexOf('/')+1, st.length());
 String breaf=doc.getBrief();
 %>
 <tr>
 
 
 
-        <td><br><a href="<%=st.toString()%>"><%=st.toString()%></a></br></td>
+        <td><br><a href="<%=aux.toString()%>"><%=st.toString()%></a></br></td>
         </tr>
         <tr>
         <td><font color="black"> <i><%=breaf.toString()%></i></font> </td>
@@ -67,7 +69,7 @@ long fin = (System.currentTimeMillis() - inicio)/1000;
 </td>
 </tr>
 </table>
-
+<applet  code=Indizador.class codebase="C:\Proyecto DLC 2010\WayraWebSite\build\web\WEB-INF\classes\wayraWeb\" height="500" width="500"></applet>
   </body>
 </html>
 
