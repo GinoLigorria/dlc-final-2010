@@ -255,4 +255,17 @@ public class Rutas
 
             return htStopWords;
     }
+
+    public static void borrarRFListaPosteoOrdenada()
+    {
+
+        rfListaPosteoOrdenada = getRFListaPosteoOrdenada();
+
+        if(rfListaPosteoOrdenada.exists())
+        {
+            rfListaPosteoOrdenada.close();
+            rfListaPosteoOrdenada.delete();
+            rfListaPosteoOrdenada = null;
+        }
+    }
 }

@@ -26,6 +26,9 @@ public final class GestorListaPosteo {
     public void ordenarListaPosteo()
     {
 
+        //genero nueva Lista de Posteo
+        Rutas.borrarRFListaPosteoOrdenada();
+
         //Levantar el vocabulario
         Collection c = Rutas.getVocabulario().getVocabulario().values();
         Iterator itr = c.iterator();
@@ -50,6 +53,8 @@ public final class GestorListaPosteo {
             Iterator itr2 = nodos.iterator();
 
             System.out.println(term.getTermino());
+
+            
 
             while(itr2.hasNext())
             {
