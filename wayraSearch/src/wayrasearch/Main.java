@@ -35,8 +35,8 @@ public class Main {
 
     //testInsercionListaPosteo();
     //Rutas.borrar();
-    //  testIndexar();
-    testBuscar();
+     testIndexar();
+    //testBuscar();
     //calcularTamanioTotalArchivos();
 
     //comprobarSanidadArchivos();
@@ -65,7 +65,7 @@ public class Main {
     {
             //INDIZAR
         //Seteo el Directorio a indizar
-        File DirectorioInicial = new File("D:\\Facu\\2009\\DLC\\DLC-Final-2010\\test");
+        File DirectorioInicial = new File("C:\\Biblioteca");
         //
         if (DirectorioInicial.isDirectory())
         {
@@ -164,7 +164,10 @@ public class Main {
             System.out.println("Cantidad de Documentos: " + cantDocs);
             for (long i = 0; i < cantDocs; i++) {
                 try {
+
                     Documento d = (Documento) rfArchivoDocu.getRegister(i).getData();
+                    //d.setRuta(d.getRuta().replace('\\', '/').replaceAll("C:/", ""));
+                    //rfArchivoDocu.writeRegister(new Register(d), i);
                     System.out.println("Documento: " + d.getRuta());
                 } catch (RegistroInexistenteException ex) {
                     System.out.println("Error al leer Documento nro: " + i);
@@ -172,6 +175,7 @@ public class Main {
             }
 
             System.out.println("Termino de verificar Archivo de Documentos");
+            return;
         }
         else
         {

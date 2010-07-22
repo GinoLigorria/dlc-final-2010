@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import utiles.ComparadorResultados;
 
 /**
  * @author Rocchietti Martin
@@ -77,7 +78,8 @@ public final class GestorBusqueda
 
         //ordenar los archivos
 
-
+        Comparator comp = new ComparadorResultados();
+        Collections.sort(vResultados,comp);
 
         //vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
         //vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
@@ -339,14 +341,15 @@ public final class GestorBusqueda
 
         Hashtable <Documento, Hashtable<Termino, Double>> htPesosDocumentos = new Hashtable<Documento, Hashtable<Termino, Double>>();
 
-        Double pesoAbsoluto = 0.0;
+        
 
         //Por cada Documento
 
         Enumeration<Documento> enumerador = htDocumentos.keys();
         while (enumerador.hasMoreElements())
         {
-
+            
+            Double pesoAbsoluto = 0.0;
             Hashtable<Termino, Double>  htPesosTerminos = new Hashtable<Termino, Double>();
             //Calcular el peso de este Documento
 
@@ -370,12 +373,15 @@ public final class GestorBusqueda
            pesoAbsoluto = Math.sqrt(pesoAbsoluto);
 
            //recalculo el peso
-
-                while (enr.hasMoreElements())
+            Enumeration<Termino> enr2 = htTerminos.keys();
+                while (enr2.hasMoreElements())
             {
-                Termino t = (Termino) enr.nextElement();
+                Termino t = (Termino) enr2.nextElement();
                 Double peso = (Double) htPesosDocumentos.get(doc).get(t);
                 peso =  peso / pesoAbsoluto;
+                htPesosDocumentos.get(doc).remove(t);
+                htPesosDocumentos.get(doc).put(t, peso);
+                peso = (Double) htPesosDocumentos.get(doc).get(t);
             }
 
         }

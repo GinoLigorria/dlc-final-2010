@@ -85,7 +85,7 @@ public final class GestorTermino
         {
             Termino t = (Termino) vocabulario.get(iter.next());
 
-            if (t != null)
+            if (t != null && ((double)t.getCantDoc()/(double)Rutas.getCantDocsBase() < 0.8)) //chequea que no sea un stop word (0.5 indice stop word)
             {
                 r.add(t);
             }
