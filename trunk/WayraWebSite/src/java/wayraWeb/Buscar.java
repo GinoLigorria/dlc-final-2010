@@ -56,7 +56,7 @@ public class Buscar  {
         Busqueda busqueda = new Busqueda();
         StringBuffer criterio = new StringBuffer(b);
         busqueda.setCriterio(criterio);
-        busqueda.setCantidadResultados(10);
+        busqueda.setCantidadResultados(5000);
         //levanto el archivo de vocabulario
         Rutas.materializarVocabulario();
         GestorBusqueda gbusqueda = new GestorBusqueda();
