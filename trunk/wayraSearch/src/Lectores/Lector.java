@@ -1,5 +1,5 @@
 /*
- * Creado el 20-feb-2007
+ * Creado el 19-jun-2010
  * 
  */
 package Lectores;
@@ -13,7 +13,7 @@ import Persistencia.Rutas;
 import java.util.Hashtable;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

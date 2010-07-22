@@ -14,7 +14,7 @@ import Gestores.ComparadorTerminoCantidadDocs;
 import java.util.Set;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

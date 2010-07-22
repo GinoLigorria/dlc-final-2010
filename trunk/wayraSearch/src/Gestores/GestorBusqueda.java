@@ -1,5 +1,5 @@
 /*
- * Creado el 22-feb-2007
+ * Creado el 19-jun-2010
  * 
  */
 package Gestores;
@@ -21,7 +21,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */
@@ -44,7 +44,7 @@ public final class GestorBusqueda
     {
         
 
-         Vector r = null;
+        Vector r = null;
 
         Vector vPalabras = extraerPalabras(' ', b.getCriterio());
         //Vector vMas = extraerPalabras('+', b.getCriterio());
@@ -57,25 +57,30 @@ public final class GestorBusqueda
         //chequear si encontro terminos para todos las palabras
 
         //Ordenar vector por frecuencias inversas //Decreciente
-         vTerminos = ordenarTerminosPorIDF(vTerminos);
+        vTerminos = ordenarTerminosPorIDF(vTerminos);
 
 
         //Obtener los primero R primeros Documentos con sus NLP de cada término
-         Hashtable<Documento,Hashtable<Termino, NodoListaPosteo>> htDocumentos = obternerNodosListaPosteo(vTerminos, b.getCantidadResultados());
+        Hashtable<Documento, Hashtable<Termino, NodoListaPosteo>> htDocumentos = obternerNodosListaPosteo(vTerminos, b.getCantidadResultados());
 
         // Obtener el módulo de la consulta
 
-         Hashtable<Termino, Double> htPesosConsult = obtenerPesoConsulta(vTerminos);
+        Hashtable<Termino, Double> htPesosConsult = obtenerPesoConsulta(vTerminos);
 
         //obtenemos el módulo de cada Documento
 
-         Hashtable<Documento, Hashtable<Termino, Double>> htPesosDocumentos = obtenerPesosDocumentos(htDocumentos);
-                   
+        Hashtable<Documento, Hashtable<Termino, Double>> htPesosDocumentos = obtenerPesosDocumentos(htDocumentos);
+
         //Aplicar la funcion de Similitud
 
-         Vector<Resultado> vResultados = obtenerSimilitud(htPesosConsult, htPesosDocumentos);
+        Vector<Resultado> vResultados = obtenerSimilitud(htPesosConsult, htPesosDocumentos);
 
-                
+        //ordenar los archivos
+
+
+
+        //vMas = GestorTermino.buscarTerminos(vMas, vocabulario);
+        //vMenos = GestorTermino.buscarTerminos(vMenos, vocabulario);
 
         return vResultados;
     }
