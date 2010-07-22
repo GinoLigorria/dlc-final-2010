@@ -11,7 +11,7 @@ import Persistencia.Grabable;
 import Persistencia.Register;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

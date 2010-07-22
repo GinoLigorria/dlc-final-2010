@@ -1,5 +1,5 @@
 /*
- * Creado el 20-feb-2007
+ * Creado el 19-jun-2010
  * 
  */
 package Persistencia.xml;
@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 import Lectores.Lector;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

@@ -9,7 +9,7 @@ import java.io.File;
 import Gestores.GestorDirectorio;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

@@ -1,5 +1,5 @@
 /*
- * Creado el 22-feb-2007
+ * Creado el 19-jun-2010
  * 
  */
 package Gestores;
@@ -15,7 +15,7 @@ import Dominio.Termino;
 import Persistencia.Rutas;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */

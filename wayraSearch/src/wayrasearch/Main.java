@@ -46,29 +46,26 @@ public class Main {
 
     }
 
-    public static void testBuscar()
-    {
-                // BUSCAR
+    public static void testBuscar() {
+        // BUSCAR
 
         //genero un objeto búsqueda
         Busqueda busqueda = new Busqueda();
         StringBuffer criterio = new StringBuffer("network");
         busqueda.setCriterio(criterio);
-         busqueda.setCantidadResultados(10);
+        busqueda.setCantidadResultados(10);
         //levanto el archivo de vocabulario
                 
         Rutas.materializarVocabulario();
         GestorBusqueda gbusqueda = new GestorBusqueda();
         gbusqueda.buscar(busqueda);
-
-
     }
 
     public static void testIndexar()
     {
             //INDIZAR
         //Seteo el Directorio a indizar
-        File DirectorioInicial = new File("C:"+System.getProperty("file.separator")+"Biblioteca");
+        File DirectorioInicial = new File("D:\\Facu\\2009\\DLC\\DLC-Final-2010\\test");
         //
         if (DirectorioInicial.isDirectory())
         {

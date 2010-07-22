@@ -5,7 +5,7 @@
 package Dominio;
 
 /**
- * @author Administrador
+ * @author Rocchietti Martin
  * 
  *  
  */
