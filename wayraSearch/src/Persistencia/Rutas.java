@@ -146,7 +146,10 @@ public class Rutas
     {
         File f = archivoVocabulario;
 
+
         try
+        {
+               if (vocabulario == null)
         {
             f.getAbsolutePath();
             FileInputStream fis = new FileInputStream(f);
@@ -158,6 +161,7 @@ public class Rutas
 
             ois.close();
             fis.close();
+          }
 
         }
         catch (FileNotFoundException e)
