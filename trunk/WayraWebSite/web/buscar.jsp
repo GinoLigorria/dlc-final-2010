@@ -69,7 +69,6 @@ long fin = (System.currentTimeMillis() - inicio)/1000;
 </td>
 </tr>
 </table>
-<applet  code=Indizador.class codebase="C:\Proyecto DLC 2010\WayraWebSite\build\web\WEB-INF\classes\wayraWeb\" height="500" width="500"></applet>
   </body>
 </html>
 
