@@ -148,6 +148,7 @@ public class Rutas
 
         try
         {
+            f.getAbsolutePath();
             FileInputStream fis = new FileInputStream(f);
             //BufferedInputStream bis = new BufferedInputStream(fis); //mejora performance
             //ObjectInputStream ois = new ObjectInputStream(bis);
